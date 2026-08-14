@@ -1,17 +1,264 @@
 ---
+import "../styles/global.css";
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+import "../styles/accueil.css";
+const titre = "LFM Farm";
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <nav>
+      <Navbar />
+    </nav>
+
+	<main>
+  <section class="hero">
+    <img
+      class="hero-image"
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786645627/LFM_FARM_FLAVIE.jpg"
+      alt="Une éleveuse avec son cheval Paint Horse"
+    />
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>
+        ÉLEVAGE DE <br>
+        <span>PAINT HORSE</span>
+      </h1>
+
+      <div class="hero-line"></div>
+
+      <p>
+        Situé au cœur du Massif Central,<br />
+        LFM Farm élève avec passion<br />
+        des Paint Horses d’exception.
+      </p>
+
+      <a class="contact-button" href="/elevages">
+        DÉCOUVRIR L’ÉLEVAGE
+      </a>
+    </div>
+  </section>
+
+<section class="foals-section">
+  <div class="foals-container">
+    <img
+      class="foals-image"
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786647179/poulain_1.jpg"
+      alt="Un poulain Paint Horse"
+    />
+
+    <div class="foals-content">
+      <h2>Nos poulains de l’année</h2>
+
+      <div class="foals-line"></div>
+
+      <p>
+        Chaque année, de nouveaux poulains
+        rejoignent l’histoire de LFM Farm.
+		<br>
+        Découvrez les jeunes chevaux issus de
+        notre sélection et suivez leur évolution.
+      </p>
+
+      <a class="foals-button" href="/poulains">
+        DÉCOUVRIR LES POULAINS
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="breeders-section">
+  <div class="breeders-container">
+    <div class="breeders-content">
+      <h2>Nos reproducteurs</h2>
+
+      <div class="breeders-line"></div>
+
+      <p>
+        Des étalons et poulinières sélectionnés<br />
+        pour transmettre le meilleur.
+      </p>
+
+      <a class="breeders-button" href="/reproducteurs">
+        DÉCOUVRIR LES REPRODUCTEURS
+      </a>
+    </div>
+
+    <div class="breeders-cards">
+      <a class="breeder-card" href="/etalons">
+        <img
+          src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786654811/etalons.jpg"
+          alt="Découvrir nos étalons"
+        />
+
+        <span class="breeder-card-title">Étalons</span>
+        <span class="breeder-card-arrow">→</span>
+      </a>
+
+      <a class="breeder-card" href="/poulinieres">
+        <img
+          src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786654695/poulinieres.jpg"
+          alt="Découvrir nos poulinières"
+        />
+
+        <span class="breeder-card-title">Poulinières</span>
+        <span class="breeder-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="available-foals">
+  <img
+    class="available-foals-image"
+    src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786695233/poulain_deux.jpg"
+    alt="Un poulain Paint Horse disponible à la vente"
+  />
+
+  <div class="available-foals-overlay"></div>
+
+  <div class="available-foals-content">
+    <h2>Nos Poulains disponible</h2>
+
+    <div class="available-foals-line"></div>
+
+    <p>
+      Découvrez les poulains actuellement<br />
+      proposés à la vente.
+    </p>
+
+    <p>
+      Chaque poulain bénéficie d’un suivi<br />
+      attentif et d’une présentation détaillée<br />
+      afin de vous permettre de trouver le<br />
+      compagnon correspondant à vos<br />
+      attentes.
+    </p>
+
+    <a class="contact-button" href="/poulains-disponibles">
+      VOIR LA DISPONIBILITÉ
+    </a>
+  </div>
+</section>
+
+<section class="gite-section">
+  <!-- Partie gauche : image bois Cloudinary -->
+  <div class="gite-introduction">
+    <img
+      class="gite-wood-image"
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786695959/wood.png"
+      alt=""
+    />
+
+    <div class="gite-introduction-content">
+      <h2>
+        Des chevaux élevés<br />
+        avec passion
+      </h2>
+
+      <div class="gite-line"></div>
+
+      <p>
+        Installé dans un cadre naturel préservé,<br />
+        LFM Farm élève des chevaux dans le<br />
+        respect de leur bien-être et de leur<br />
+        équilibre.
+      </p>
+
+      <a class="breeders-button" href="/a-propos">
+        EN SAVOIR PLUS
+      </a>
+    </div>
+  </div>
+
+  <!-- Partie droite : photo du gîte Cloudinary -->
+  <div class="gite-photo">
+    <img
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786696058/gite_face.jpg"
+      alt="Le gîte de LFM Farm"
+    />
+
+    <a class="gite-booking-card" href="/gite">
+      <img
+        class="gite-booking-icon"
+        src="/icons/calendar.svg"
+        alt=""
+      />
+
+      <span class="gite-booking-text">
+        <strong>RÉSERVER LE GÎTE</strong>
+        <small>
+          Profitez d’un séjour au<br />
+          cœur de notre élevage
+        </small>
+      </span>
+
+      <span class="gite-booking-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="reviews-container">
+    <h2>Ils parlent de nous</h2>
+    <div class="reviews-line"></div>
+
+    <div class="reviews-widget">
+      <!-- Colle ici le code fourni par Elfsight -->
+
+<!-- Elfsight All-in-One Reviews | Untitled All-in-One Reviews -->
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-b8d7494e-71dd-4d7e-a20b-a2f9c9dfe819" data-elfsight-app-lazy></div>
+<div
+        class="elfsight-app-TON-IDENTIFIANT"
+        data-elfsight-app-lazy
+      ></div>
+    </div>
+
+    <div class="social-content">
+      <h3>
+        Retrouvez toutes nos dernières actualités<br />
+        et l’évolution de nos chevaux sur nos<br />
+        réseaux sociaux !
+      </h3>
+
+      <div class="social-links">
+        <a
+          href="LIEN_FACEBOOK"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook de LFM Farm"
+        >
+          <img src="/icons/facebook.svg" alt="" />
+        </a>
+
+        <a
+          href="LIEN_INSTAGRAM"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram de LFM Farm"
+        >
+          <img src="/icons/instagram.svg" alt="" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <Footer />
+</footer>
+  </body>
 </html>

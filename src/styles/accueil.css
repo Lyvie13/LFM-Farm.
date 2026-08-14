@@ -1,0 +1,544 @@
+/* =========================
+   HERO – PAGE D’ACCUEIL
+========================= */
+
+.hero {
+  position: relative;
+  height: 550px;
+  overflow: hidden;
+  background-color: #f8eadb;
+}
+.hero-image {
+  position: absolute;
+  top: -6%;
+  right: 0;
+
+  width: auto;
+  height: 122%;
+  max-width: none;
+
+  object-fit: contain;
+  object-position: right center;
+}
+/* Dégradé clair placé par-dessus l’image */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(248, 234, 219, 1) 30%,
+    rgba(248, 234, 219, 0.95) 32%,
+    rgba(248, 234, 219, 0.55) 41%,
+    rgba(248, 234, 219, 0) 58%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(90%, 1300px);
+  margin: 0 auto;
+  padding-top: 90px;
+  color: #a83f1d;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: clamp(32px, 3.2vw, 55px);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.hero h1 span {
+  display: block;
+}
+
+.hero-line {
+  width: 190px;
+  height: 2px;
+  margin: 42px 0;
+  background-color: #c87555;
+}
+
+.hero p {
+  margin: 0 0 55px;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  line-height: 1.45;
+}
+
+
+
+
+/* =========================
+   SECTION POULAINS
+========================= */
+
+.foals-section {
+  padding: 60px 5%;
+  background-color: #fffdf9;
+  border-top: 1px solid #d9b18f;
+}
+
+.foals-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 45px;
+}
+
+.foals-image {
+  display: block;
+  width: 81%;
+  height: 351px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+.foals-content {
+  color: #a83f1d;
+}
+
+.foals-content h2 {
+  margin:  0 0 30px 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.foals-line {
+  width: 354px;
+  height: 2px;
+  margin: 22px 0;
+  background-color: #d17b5d;
+}
+
+.foals-content p {
+  margin: 0 0 40px;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  line-height: 1.35;
+}
+
+.foals-button {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 1px solid #a83f1d;
+  border-radius: 6px;
+
+  color: #a83f1d;
+  background-color: transparent;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.foals-button:hover {
+  color: white;
+  background-color: #a83f1d;
+}
+
+/* =========================
+   SECTION REPRODUCTEURS
+========================= */
+
+.breeders-section {
+  padding: 65px 5%;
+  background-color: #a83f1d;
+  color: white;
+}
+
+.breeders-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  gap: 70px;
+}
+
+.breeders-content h2 {
+  margin: 0 0 30px 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.breeders-line {
+  width: 190px;
+  height: 2px;
+  margin: 22px 0;
+  background-color: white;
+}
+
+.breeders-content p {
+  margin: 0 0 40px;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  line-height: 1.35;
+}
+
+.breeders-button {
+  display: inline-block;
+  padding: 13px 22px;
+  border-radius: 6px;
+  background-color: white;
+  color: #a83f1d;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.breeders-button:hover {
+  background-color: #f8eadb;
+}
+
+.breeders-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.breeder-card {
+  position: relative;
+  display: block;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+}
+
+.breeder-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Dégradé sombre pour rendre le texte lisible */
+.breeder-card::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+}
+
+.breeder-card:hover img {
+  transform: scale(1.04);
+}
+
+.breeder-card-title {
+  position: absolute;
+  z-index: 1;
+  left: 12px;
+  bottom: 12px;
+
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 18px;
+}
+
+.breeder-card-arrow {
+  position: absolute;
+  z-index: 1;
+  right: 12px;
+  bottom: 10px;
+
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background-color: #a83f1d;
+  color: white;
+}
+
+/* =========================
+   POULAINS DISPONIBLES
+========================= */
+
+.available-foals {
+  position: relative;
+  height: 565px;
+  overflow: hidden;
+  background-color: #f8eadb;
+}
+
+.available-foals-image {
+  position: absolute;
+top: -4%;
+right: 0;
+width: auto;
+height: 122%;
+max-width: none;
+object-fit: contain;
+object-position: right center; 
+}
+
+.available-foals-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(248, 234, 219, 1) 38%,
+    rgba(248, 234, 219, 0.98) 43%,
+    rgba(248, 234, 219, 0.78) 48%,
+    rgba(248, 234, 219, 0.2) 58%,
+    rgba(248, 234, 219, 0) 70%
+  );
+}
+
+.available-foals-content {
+  position: relative;
+  z-index: 1;
+
+  width: min(90%, 1300px);
+  margin: 0 auto;
+  padding-top: 65px;
+
+  color: #a83f1d;
+}
+
+.available-foals-content h2 {
+  margin: 0 0 30px 0;
+
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.available-foals-line {
+  width: 230px;
+  height: 2px;
+  margin: 22px 0;
+
+  background-color: #c87555;
+}
+
+.available-foals-content p {
+  margin: 0 0 40px;
+
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  line-height: 1.3;
+}
+
+/* =========================
+   SECTION GÎTE
+========================= */
+
+.gite-section {
+  display: grid;
+  grid-template-columns: 46% 54%;
+  min-height: 440px;
+}
+
+/* Partie gauche */
+
+.gite-introduction {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  
+}
+
+.gite-wood-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gite-introduction::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(56, 25, 13, 0.25);
+}
+
+.gite-introduction-content {
+  position: relative;
+  z-index: 1;
+  padding: 55px 9%;
+}
+
+.gite-introduction h2 {
+  margin: 0 0 30px 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.gite-line {
+  width: 220px;
+  height: 2px;
+  margin: 22px 0 28px;
+  background-color: white;
+}
+
+.gite-introduction p {
+  margin: 0 0 40px;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  line-height: 1.35;
+}
+
+/* Partie droite */
+
+.gite-photo {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+}
+
+.gite-photo > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gite-booking-card {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 10px;
+
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #b6401d;
+  color: white;
+  text-decoration: none;
+}
+
+.gite-booking-icon {
+  width: 25px;
+  height: 25px;
+
+  /* Rend blanche une icône SVG noire */
+  filter: brightness(0) invert(1);
+}
+
+.gite-booking-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.gite-booking-text strong {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+}
+
+.gite-booking-text small {
+  margin-top: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.gite-booking-arrow {
+  align-self: end;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.gite-booking-card:hover {
+  background-color: #8e2e12;
+}
+
+/* =========================
+   AVIS ET RÉSEAUX SOCIAUX
+========================= */
+
+.reviews-section {
+  padding: 55px 5% 45px;
+  background-color: #f8eadb;
+  color: #a83f1d;
+}
+
+.reviews-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.reviews-container > h2 {
+  margin: 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+.reviews-line {
+  width: 220px;
+  height: 2px;
+  margin: 30px 0 30px;
+  background-color: #b84a28;
+}
+
+.reviews-widget {
+  min-height: 190px;
+}
+
+/* Texte sous les avis */
+
+.social-content {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.social-content h3 {
+  margin: 0;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 27px;
+  font-weight: 550;
+  line-height: 1.15;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  margin-top: 28px;
+}
+
+.social-links a {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+}
+
+.social-links img {
+  width: 25px;
+  height: 25px;
+
+  /* Recolore en couleur accent une icône noire */
+  filter: invert(25%) sepia(72%) saturate(1641%)
+    hue-rotate(351deg) brightness(83%) contrast(90%);
+}
+
+.social-links a:hover {
+  transform: translateY(-2px);
+}
+

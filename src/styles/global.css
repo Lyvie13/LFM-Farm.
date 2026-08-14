@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background-color: #fff8ef;
+  color: #7c2d12;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.site-header {
+  min-height: 105px;
+  padding: 12px 3%;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr ;
+  align-items: center;
+  gap: 45px;
+  background-color: #f8eadb;
+}
+
+.logo-link {
+  display: flex;
+justify-self: start;
+}
+
+.logo {
+  display: block;
+  width: 118px;
+  height: auto;
+   filter: invert(16%) sepia(80%) saturate(1450%)
+    hue-rotate(350deg) brightness(78%) contrast(92%);
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.site-header nav a {
+  color: #a83f1d;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header nav a:hover {
+  color: #76280f;
+}
+
+
+/* =========================
+   BOUTON CONTACT
+========================= */
+
+
+.contact-button {
+  justify-self: end;
+  padding: 15px 27px;
+  border-radius: 10px;
+  background-color: #a83f1d;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contact-button:hover {
+  background-color: #7f2c11;
+}
+

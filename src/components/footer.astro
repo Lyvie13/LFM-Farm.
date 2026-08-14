@@ -1,0 +1,175 @@
+<footer class="site-footer">
+  <img
+    class="footer-background"
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786695959/wood.png"
+    alt=""
+  />
+
+  <div class="footer-overlay"></div>
+
+  <div class="footer-container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <strong>LFM FARM</strong>
+        <span>Élevage de Paint Horse</span>
+      </div>
+
+      <address class="footer-contact">
+        <a
+          href="https://maps.google.com/?q=Lieu+dit+Maiguezin+43150+Salettes"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/icons/home.svg" alt="" />
+          <span>Lieu dit Maiguezin, 43150 Salettes</span>
+        </a>
+
+        <div class="footer-contact-row">
+          <img src="/icons/phone.svg" alt="" />
+
+          <span>
+            <a href="tel:+33628331162">06.28.33.11.62</a>
+            /
+            <a href="tel:+33634961727">06.34.96.17.27</a>
+          </span>
+        </div>
+
+        <a href="mailto:contact@lfmfarm.fr">
+          <img src="/icons/email.svg" alt="" />
+          <span>contact@lfmfarm.fr</span>
+        </a>
+      </address>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026</span>
+
+      <a href="/politique-de-confidentialite">
+        Politique de confidentialité
+      </a>
+
+      <a href="/mentions-legales">
+        Mentions légales
+      </a>
+
+      <span>
+        Site pensé et conçu par : 
+        <a
+          href="TON_LIEN_PORTFOLIO"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Lyvie Studio
+        </a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    min-height: 275px;
+    overflow: hidden;
+    color: white;
+  }
+
+  .footer-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .footer-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(40, 17, 8, 0.32);
+  }
+
+  .footer-container {
+    position: relative;
+    z-index: 1;
+    width: min(90%, 1200px);
+    min-height: 275px;
+    margin: 0 auto;
+    padding: 45px 0 18px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-brand strong {
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+  }
+
+  .footer-brand span {
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin: 0;
+    font-style: normal;
+  }
+
+  .footer-contact > a,
+  .footer-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .footer-contact img {
+    flex-shrink: 0;
+    width: 23px;
+    height: 23px;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-contact a {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .footer-contact a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+  }
+
+  .footer-bottom a {
+    color: white;
+    text-decoration: underline;
+  }
+
+</style>

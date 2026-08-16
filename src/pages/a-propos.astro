@@ -1,0 +1,208 @@
+---
+import "../styles/global.css";
+import "../styles/a-propos.css";
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+const titre = "LFM Farm / À propos";
+
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+	
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <nav>
+      <Navbar />
+    </nav>
+
+  <header>
+    <section class="breeding-hero">
+  <img
+    class="breeding-hero-image"
+    src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786704058/chevaux_prairie.jpg"
+    alt="Les chevaux de LFM Farm dans leur prairie"
+  />
+
+  <div class="breeding-hero-overlay"></div>
+
+  <div class="breeding-hero-title">
+    <h1>LFM FARM :</h1>
+    <p>Un élevage professionnel mère-fille.</p>
+  </div>
+
+  <img
+    class="apha-logo"
+    src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786703893/apha.png"
+    alt="American Paint Horse Association"
+  />
+</section>
+  </header>
+
+  <main>
+
+    <section class="about-introduction">
+  <div class="about-container">
+    <div class="about-presentation">
+      <div class="about-presentation-text">
+        <h1>Bienvenue à LFM Farm</h1>
+
+        <p>
+          Nous sommes Cécilia et Flavie, fondatrices<br />
+          de LFM Farm, un élevage familial de Paint Horses<br />
+          situé au cœur des montagnes altiligériennes.
+        </p>
+
+        <p>
+          C’est dans un environnement préservé, au sein de<br />
+          plus de 30 hectares de prairies, que vivent et<br />
+          grandissent nos chevaux en troupeau, dans le<br />
+          respect de leurs besoins naturels.
+        </p>
+
+        <p>
+          Implanté en Haute-Loire, en région Auvergne-<br />
+          Rhône-Alpes, notre élevage bénéficie d’un cadre<br />
+          exceptionnel offrant des conditions idéales pour le<br />
+          bien-être et l’épanouissement de nos chevaux et<br />
+          poulains.
+        </p>
+      </div>
+
+      <img
+        class="about-landscape"
+        src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786737208/volcans-auvergne-haute-loire-mezenc-2-1920x1080-f50_50_pkwcfl.jpg"
+        alt="Paysage de Haute-Loire autour de LFM Farm"
+      />
+    </div>
+
+    <div class="about-selection">
+      <h2>Une sélection fondée sur la qualité</h2>
+
+      <p>
+        Notre programme d’élevage repose sur une sélection rigoureuse
+        de poulinières et d’étalons reconnus pour leur mental, leur modèle
+        et leurs origines.
+      </p>
+
+      <p>
+        Nous privilégions avant tout des chevaux équilibrés, proches de
+        l’homme et polyvalents, afin de produire des poulains capables
+        d’exceller dans de nombreuses disciplines tout en restant
+        d’excellents partenaires au quotidien.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="about-introduction">
+  <div class="about-container">
+    <div class="about-presentation">
+      <img
+        class="about-landscape"
+        src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786737182/poulain_mere.jpg"
+        alt="Un poulain accompagné de sa mère"
+      />
+
+      <div class="about-selection">
+        <h2>
+          Des poulains bien dans leur tête et dans
+          leurs sabots
+        </h2>
+
+        <p>
+          Dès leur naissance, nos poulains évoluent en troupeau et
+          bénéficient d’une manipulation quotidienne.<br /> <br />
+          Cette approche favorise leur sociabilisation, leur confiance
+          envers l’humain et leur développement physique et mental.
+        </p>
+
+        <p>Tous nos poulains sont vendus avec :</p>
+
+        <ul>
+          <li>Leurs papiers APHA et AQHA</li>
+          <li>L’enregistrement SIRE</li>
+          <li>Les vermifuges à jour</li>
+          <li>Les vaccinations</li>
+          <li>Le suivi maréchal-ferrant</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-selection">
+      <h2>Des étalons élevés dans le respect de leur nature</h2>
+
+      <p>
+        Nos étalons vivent également en troupeau, accompagnés de leurs
+        juments durant la saison de reproduction.
+      </p>
+
+      <p>
+        Ce mode de vie naturel contribue à préserver leur équilibre,
+        leur sérénité et leur excellent caractère.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="about-presentation about-presentation--spaced">
+  <div class="about-selection">
+    <h2>Séjournez au cœur de l’élevage</h2>
+
+    <p>
+      Depuis 2021, LFM Farm vous accueille également dans son gîte
+      équestre, conçu pour les amoureux de nature, de chevaux et de
+      grands espaces.
+    </p>
+
+    <p>
+      D’une capacité d’accueil de 12 personnes, le gîte offre tout le
+      confort nécessaire pour un séjour en famille, entre amis ou lors
+      d’un événement équestre.
+    </p>
+
+    <p>Nous mettons à disposition :</p>
+
+    <ul>
+      <li>Boxes</li>
+      <li>Paddocks</li>
+      <li>Douche pour chevaux</li>
+      <li>Sellerie</li>
+      <li>Services de maréchalerie et de dentisterie équine à proximité</li>
+    </ul>
+
+    <a class="primary-button" href="/gite">
+      VOIR LA DISPONIBILITÉ
+    </a>
+  </div>
+
+  <img
+    class="about-landscape"
+      src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1786696058/gite_face.jpg"
+    alt="Le gîte de LFM Farm"
+  />
+</div>
+
+<div class="about-selection">
+  <h2>Venez nous rencontrer</h2>
+
+  <p>
+    Nous accueillons les visiteurs principalement les week-ends et sur
+    rendez-vous afin de vous consacrer le temps nécessaire et de vous
+    faire découvrir notre univers dans les meilleures conditions.
+  </p>
+
+  <p>
+    Au plaisir de vous accueillir prochainement à LFM Farm !
+  </p>
+</div>
+  </main>
+<footer>
+  <Footer />
+</footer>
+  </body>
+</html>

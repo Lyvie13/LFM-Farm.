@@ -1,3 +1,5 @@
+
+
 * {
   box-sizing: border-box;
 }
@@ -87,3 +89,24 @@ justify-self: start;
   background-color: #7f2c11;
 }
 
+
+/*==========================
+Autres boutons
+==========================*/
+
+.primary-button {
+  justify-self: end;
+  padding: 15px 27px;
+  border-radius: 10px;
+  background-color: #a83f1d;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.primary-button:hover {
+  background-color: #7f2c11;
+}

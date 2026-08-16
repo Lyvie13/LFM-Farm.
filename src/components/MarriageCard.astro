@@ -1,0 +1,184 @@
+---
+const { mariage } = Astro.props;
+
+const fields = mariage.fields;
+
+const etalon = fields.etalon;
+const pouliniere = fields.pouliniere;
+
+const etalonFields = etalon?.fields;
+const pouliniereFields = pouliniere?.fields;
+
+const etalonPhoto = etalonFields?.photoPrincipale?.fields?.file?.url;
+const poulinierePhoto =
+  pouliniereFields?.photoPrincipale?.fields?.file?.url;
+
+const etalonImageUrl = etalonPhoto ? `https:${etalonPhoto}` : "";
+const pouliniereImageUrl = poulinierePhoto
+  ? `https:${poulinierePhoto}`
+  : "";
+
+const titre =
+  fields.titrePersonnalise ||
+  `${etalonFields?.nom || ""} & ${pouliniereFields?.nom || ""}`;
+
+const informationsGenetiques = [
+  etalonFields?.genotype,
+  pouliniereFields?.genotype,
+]
+  .filter(Boolean)
+  .join(" × ");
+
+const afficherBouton =
+  fields.reservationOuverte !== false && fields.lienBouton;
+---
+
+<article class="marriage-card">
+  <div class="marriage-card-images">
+    {
+      etalonImageUrl && (
+        <img
+          src={etalonImageUrl}
+          alt={`Étalon ${etalonFields?.nom || ""}`}
+        />
+      )
+    }
+
+    {
+      pouliniereImageUrl && (
+        <img
+          src={pouliniereImageUrl}
+          alt={`Poulinière ${pouliniereFields?.nom || ""}`}
+        />
+      )
+    }
+  </div>
+
+  <div class="marriage-card-content">
+    <h2>{titre}</h2>
+
+    {
+      informationsGenetiques && (
+        <p class="marriage-genetics">
+          {informationsGenetiques}
+        </p>
+      )
+    }
+
+    {
+      fields.termePrevu && (
+        <p class="marriage-term">
+          TERME : {fields.termePrevu}
+        </p>
+      )
+    }
+
+    {
+      fields.informationsComplementaires && (
+        <p class="marriage-description">
+          {fields.informationsComplementaires}
+        </p>
+      )
+    }
+
+    {
+      afficherBouton && (
+        <a
+          class="marriage-button"
+          href={fields.lienBouton}
+        >
+          {fields.texteBouton || "RÉSERVER LA NAISSANCE"}
+        </a>
+      )
+    }
+
+    {
+      !fields.reservationOuverte && fields.statut && (
+        <span class="marriage-status">{fields.statut}</span>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .marriage-card {
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.16);
+  }
+
+  .marriage-card-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 360px;
+  }
+
+  .marriage-card-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .marriage-card-content {
+    padding: 35px 30px 40px;
+    color: #28231f;
+    text-align: center;
+  }
+
+  .marriage-card-content h2 {
+    margin: 0 0 18px;
+    font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+    font-size: clamp(23px, 2.4vw, 34px);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .marriage-genetics {
+    margin: 0 0 18px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  .marriage-term {
+    margin: 0 0 22px;
+    color: #a83f1d;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .marriage-description {
+    max-width: 650px;
+    margin: 0 auto 25px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  }
+
+  .marriage-button {
+    display: inline-block;
+    padding: 17px 35px;
+    border-radius: 7px;
+    background-color: #a83f1d;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .marriage-button:hover {
+    background-color: #7f2c11;
+  }
+
+  .marriage-status {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid #a83f1d;
+    border-radius: 6px;
+    color: #a83f1d;
+    font-weight: 700;
+  }
+
+</style>

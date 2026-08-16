@@ -1,0 +1,94 @@
+---
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+import '../styles/global.css';
+import '../styles/reproducteurs.css';
+const titre = 'LFM Farm / Reproducteurs';
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{titre}</title>
+  </head>
+  <body>
+    <nav>
+      <Navbar />
+    </nav>
+
+    <main>
+<section class="breeders-hero">
+  <img
+    class="breeders-hero-image"
+    src="LIEN_CLOUDINARY_REPRODUCTEURS"
+    alt="Les reproducteurs de LFM Farm dans leur prairie"
+  />
+
+  <div class="breeders-hero-overlay"></div>
+
+  <div class="breeders-hero-content">
+    <h1>REPRODUCTEURS</h1>
+    <p>Des lignées d’exception</p>
+  </div>
+</section>
+
+<section class="breeder-selection">
+  <div class="breeder-selection-container">
+    <div class="breeder-selection-grid">
+      <!-- Carte étalons -->
+
+      <article class="breeder-selection-card">
+        <div class="breeder-selection-content">
+          <h2>ÉTALONS</h2>
+          <div class="breeder-selection-line"></div>
+
+          <p>
+            Découvrez nos étalons et<br />
+            leurs pédigrées prestigieux.
+          </p>
+
+          <a class="breeder-selection-button" href="/etalons">
+            DÉCOUVRIR
+          </a>
+        </div>
+
+        <img
+          src="LIEN_CLOUDINARY_ETALON"
+          alt="Un étalon Paint Horse"
+        />
+      </article>
+
+      <!-- Carte poulinières -->
+
+      <article class="breeder-selection-card">
+        <div class="breeder-selection-content">
+          <h2>POULINIÈRES</h2>
+          <div class="breeder-selection-line"></div>
+
+          <p>
+            Découvrez nos poulinières sélectionnées<br />
+            pour leur qualité et leur génétique.
+          </p>
+
+          <a class="breeder-selection-button" href="/poulinieres">
+            DÉCOUVRIR
+          </a>
+        </div>
+
+        <img
+          src="LIEN_CLOUDINARY_POULINIERE"
+          alt="Une poulinière Paint Horse"
+        />
+      </article>
+    </div>
+
+    <a class="breeding-season-button" href="/saillies">
+      VOIR LES MARIAGES 2027
+    </a>
+  </div>
+</section>
+    </main>
+    <Footer />
+  </body>
+</html> 

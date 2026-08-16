@@ -3,7 +3,7 @@ import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
 import '../styles/global.css';
 import '../styles/reproducteurs.css';
-import MarriageCard from "../components/marriageCard.astro";  
+import MarriageCard from "../components/MarriageCard.astro";  
 import { contentfulClient } from "../lib/contentful";
 const response = await contentfulClient.getEntries({
   content_type: "mariage",

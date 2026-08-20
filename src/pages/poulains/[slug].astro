@@ -1,6 +1,8 @@
 ---
 import Navbar from "../../components/navbar.astro";
 import Footer from "../../components/footer.astro";
+import FicheCheval from "../../components/FicheCheval.astro";
+
 import { contentfulClient } from "../../lib/contentful";
 
 import "../../styles/global.css";
@@ -13,7 +15,10 @@ export async function getStaticPaths() {
   });
 
   return response.items
-    .filter((poulain: any) => poulain.fields.slug)
+    .filter(
+      (poulain: any) =>
+        poulain.fields.slug
+    )
     .map((poulain: any) => ({
       params: {
         slug: poulain.fields.slug,
@@ -27,35 +32,6 @@ export async function getStaticPaths() {
 
 const { poulain } = Astro.props;
 const fields = poulain.fields;
-
-const getImageUrl = (image: any) => {
-  const url = image?.fields?.file?.url;
-
-  if (!url) return "";
-  if (url.startsWith("//")) return `https:${url}`;
-
-  return url;
-};
-
-const photoPrincipale = getImageUrl(
-  fields.photoPrincipale
-);
-
-const galerie = fields.photos || fields.galerie || [];
-
-const pere = fields.pere?.fields;
-const mere = fields.mere?.fields;
-
-const dateNaissance = fields.dateNaissance
-  ? new Date(fields.dateNaissance).toLocaleDateString(
-      "fr-FR",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }
-    )
-  : "";
 ---
 
 <!doctype html>
@@ -68,111 +44,20 @@ const dateNaissance = fields.dateNaissance
       content="width=device-width"
     />
 
-    <title>{fields.nom} | LFM Farm</title>
+    <title>
+      {fields.nom} | Poulain | LFM Farm
+    </title>
   </head>
 
   <body>
     <Navbar />
 
-    <main>
-      <div class="horse-back">
-        <a href="/poulains">← Retour aux poulains</a>
-      </div>
-
-      <section class="horse-detail">
-        <div class="horse-gallery">
-          {
-            photoPrincipale && (
-              <img
-                class="horse-main-image"
-                src={photoPrincipale}
-                alt={fields.nom}
-              />
-            )
-          }
-
-          {
-            galerie.length > 0 && (
-              <div class="horse-thumbnails">
-                {galerie.map((photo: any) => (
-                  <img
-                    src={getImageUrl(photo)}
-                    alt={`${fields.nom} à LFM Farm`}
-                    loading="lazy"
-                  />
-                ))}
-              </div>
-            )
-          }
-        </div>
-
-        <div class="horse-information">
-          <h1>{fields.nom}</h1>
-
-          {
-            (fields.sexe || dateNaissance) && (
-              <p class="horse-summary">
-                {fields.sexe}
-
-                {fields.sexe && dateNaissance && " – "}
-
-                {dateNaissance && `Né le ${dateNaissance}`}
-              </p>
-            )
-          }
-
-          {
-            fields.description && (
-              <p>{fields.description}</p>
-            )
-          }
-
-          <div class="horse-parents">
-            {
-              pere?.nom && (
-                <p>
-                  <strong>Père :</strong>{" "}
-                  {pere.nom}
-                </p>
-              )
-            }
-
-            {
-              mere?.nom && (
-                <p>
-                  <strong>Mère :</strong>{" "}
-                  {mere.nom}
-                </p>
-              )
-            }
-          </div>
-
-          {
-            fields.informations && (
-              <div class="horse-extra">
-                <h2>Informations</h2>
-                <p>{fields.informations}</p>
-              </div>
-            )
-          }
-
-          {
-            fields.prix && (
-              <p class="horse-price">
-                {fields.prix}
-              </p>
-            )
-          }
-
-          <a
-            class="horse-contact-button"
-            href="/contact"
-          >
-            NOUS CONTACTER
-          </a>
-        </div>
-      </section>
-    </main>
+    <FicheCheval
+      cheval={poulain}
+      typeCheval="Poulain"
+      lienRetour="/poulains"
+      texteRetour="Retour aux poulains"
+    />
 
     <Footer />
   </body>

@@ -1,0 +1,63 @@
+---
+import Navbar from "../../components/navbar.astro";
+import Footer from "../../components/footer.astro";
+import FicheCheval from "../../components/FicheCheval.astro";
+import { contentfulClient } from "../../lib/contentful";
+
+import "../../styles/global.css";
+import "../../styles/fiche-cheval.css";
+
+export async function getStaticPaths() {
+  const response = await contentfulClient.getEntries({
+    content_type: "poulinieres",
+    include: 2,
+  });
+
+  return response.items
+    .filter(
+      (pouliniere: any) =>
+        pouliniere.fields.slug
+    )
+    .map((pouliniere: any) => ({
+      params: {
+        slug: pouliniere.fields.slug,
+      },
+
+      props: {
+        pouliniere,
+      },
+    }));
+}
+
+const { pouliniere } = Astro.props;
+const fields = pouliniere.fields;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+
+    <title>
+      {fields.nom} | Poulinière | LFM Farm
+    </title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <FicheCheval
+      cheval={pouliniere}
+      typeCheval="Poulinière"
+      lienRetour="/poulinieres"
+      texteRetour="Retour aux poulinières"
+    />
+
+    <Footer />
+  </body>
+</html>

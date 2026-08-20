@@ -1,0 +1,59 @@
+---
+import Navbar from "../../components/navbar.astro";
+import Footer from "../../components/footer.astro";
+import FicheCheval from "../../components/FicheCheval.astro";
+
+import { contentfulClient } from "../../lib/contentful";
+
+import "../../styles/global.css";
+import "../../styles/fiche-cheval.css";
+
+export async function getStaticPaths() {
+  const response = await contentfulClient.getEntries({
+    content_type: "etalons",
+    include: 2,
+  });
+
+  return response.items
+    .filter((etalon: any) => etalon.fields.slug)
+    .map((etalon: any) => ({
+      params: {
+        slug: etalon.fields.slug,
+      },
+
+      props: {
+        etalon,
+      },
+    }));
+}
+
+const { etalon } = Astro.props;
+const fields = etalon.fields;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+
+    <title>{fields.nom} | Étalon | LFM Farm</title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <FicheCheval
+      cheval={etalon}
+      typeCheval="Étalon"
+      lienRetour="/etalons"
+      texteRetour="Retour aux étalons"
+    />
+
+    <Footer />
+  </body>
+</html>

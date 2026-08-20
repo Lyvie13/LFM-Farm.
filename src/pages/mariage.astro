@@ -3,19 +3,17 @@ import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
 import '../styles/global.css';
 import '../styles/reproducteurs.css';
-import MarriageCard from "../components/MarriageCard.astro";  
+import MarriageCard from "../components/MarriageCard.astro";
 import { contentfulClient } from "../lib/contentful";
 const response = await contentfulClient.getEntries({
   content_type: "mariage",
   include: 2,
 });
 
-const mariages = response.items
-  .filter((mariage: any) => mariage.fields.afficher !== false)
-  .sort(
-    (a: any, b: any) =>
-      (a.fields.ordre || 999) - (b.fields.ordre || 999)
-  );
+const mariages = response.items.filter(
+  (mariage: any) =>
+    mariage.fields.afficherSurLeSite !== false
+);
 const titre = 'LFM Farm / Mariage';
 ---
 <!doctype html>

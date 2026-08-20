@@ -1,0 +1,149 @@
+.horse-back {
+  width: min(100% - 40px, 1200px);
+  margin: 25px auto;
+}
+
+.horse-back a {
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.horse-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(100% - 40px, 1200px);
+  margin: 0 auto 70px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f8eadb;
+}
+
+.horse-gallery {
+  background-color: white;
+}
+
+.horse-main-image {
+  display: block;
+  width: 100%;
+  height: 570px;
+  object-fit: cover;
+}
+
+.horse-no-image {
+  display: grid;
+  height: 570px;
+  place-items: center;
+  color: #777;
+}
+
+.horse-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding: 6px;
+}
+
+.horse-thumbnail-button {
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.horse-thumbnail-button img {
+  display: block;
+  width: 100%;
+  height: 95px;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.horse-thumbnail-button:hover img {
+  opacity: 0.75;
+}
+
+.horse-information {
+  padding: 45px;
+  color: #28231f;
+}
+
+.horse-type {
+  margin: 0 0 8px;
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.horse-information h1 {
+  margin: 0 0 8px;
+  font-family: Baskerville, "Baskerville Old Face",
+    Georgia, serif;
+  font-size: clamp(27px, 4vw, 42px);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.horse-summary,
+.horse-price {
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+}
+
+.horse-description {
+  line-height: 1.5;
+}
+
+.horse-parents {
+  margin: 25px 0;
+}
+
+.horse-parents p {
+  margin: 5px 0;
+}
+
+.horse-extra {
+  margin-top: 25px;
+}
+
+.horse-extra h2 {
+  margin: 0 0 8px;
+  color: #a83f1d;
+  font-family: Baskerville, Georgia, serif;
+  font-size: 22px;
+}
+
+.horse-extra p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.horse-facebook {
+  display: block;
+  width: fit-content;
+  margin-top: 25px;
+  color: #28231f;
+  font-style: italic;
+}
+
+.horse-contact-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 15px 27px;
+  border-radius: 7px;
+  background-color: #a83f1d;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.horse-contact-button:hover {
+  background-color: #7f2c11;
+}
+

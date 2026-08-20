@@ -1,0 +1,107 @@
+/* =========================
+   TITRE DE LA PAGE
+========================= */
+
+.etalons-heading {
+  padding: 55px 5%;
+  background-color: #f8eadb;
+  text-align: center;
+}
+
+.etalons-heading h1 {
+  margin: 0 0 12px;
+  color: #a83f1d;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: clamp(34px, 5vw, 55px);
+  font-weight: 400;
+}
+
+.etalons-heading p {
+  margin: 0;
+  color: #28231f;
+  font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   CARTES DES ÉTALONS
+========================= */
+
+.etalons-section {
+  padding: 65px 5%;
+  background-color: #fff8ef;
+}
+
+.etalons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.etalon-card {
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+}
+
+.etalon-card-image {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.etalon-card-content {
+  padding: 25px;
+}
+
+.etalon-card-content h2 {
+  margin: 0 0 12px;
+  color: #28231f;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.etalon-card-genotype {
+  margin: 0 0 15px;
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.etalon-card-description {
+  margin: 0 0 22px;
+  color: #28231f;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.etalon-card-button {
+  display: inline-block;
+  padding: 13px 20px;
+  border-radius: 6px;
+  background-color: #a83f1d;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.etalon-card-button:hover {
+  background-color: #7f2c11;
+}
+
+.etalons-empty {
+  grid-column: 1 / -1;
+  color: #a83f1d;
+  text-align: center;
+}
+

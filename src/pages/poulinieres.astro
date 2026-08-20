@@ -1,0 +1,122 @@
+---
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+import { contentfulClient } from "../lib/contentful";
+
+import "../styles/global.css";
+import "../styles/etalons.css";
+
+const titre = "LFM Farm / Poulinières";
+
+/* Récupération uniquement des poulinières */
+const response = await contentfulClient.getEntries({
+  content_type: "poulinieres",
+});
+
+const poulinieres = response.items
+  .filter(
+    (pouliniere: any) =>
+      pouliniere.fields.afficherSurLeSite !== false
+  )
+  .sort(
+    (a: any, b: any) =>
+      (a.fields.ordre || 999) -
+      (b.fields.ordre || 999)
+  );
+
+const getImageUrl = (url: string | undefined) => {
+  if (!url) return "";
+  if (url.startsWith("//")) return `https:${url}`;
+
+  return url;
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <main>
+      <section class="etalons-heading">
+        <h1>Nos poulinières</h1>
+
+        <p>
+          Découvrez les poulinières de LFM Farm.
+        </p>
+      </section>
+
+      <section class="etalons-section">
+        <div class="etalons-grid">
+          {
+            poulinieres.length > 0 ? (
+              poulinieres.map((pouliniere: any) => {
+                const fields = pouliniere.fields;
+
+                const photo = getImageUrl(
+                  fields.photoPrincipale
+                    ?.fields?.file?.url
+                );
+
+                return (
+                  <article class="etalon-card">
+                    {photo && (
+                      <img
+                        class="etalon-card-image"
+                        src={photo}
+                        alt={`Poulinière ${fields.nom || ""}`}
+                        loading="lazy"
+                      />
+                    )}
+
+                    <div class="etalon-card-content">
+                      <h2>{fields.nom}</h2>
+
+                      {fields.genotype && (
+                        <p class="etalon-card-genotype">
+                          {fields.genotype}
+                        </p>
+                      )}
+
+                      {fields.description && (
+                        <p class="etalon-card-description">
+                          {fields.description}
+                        </p>
+                      )}
+
+                      {fields.slug && (
+                        <a
+                          class="etalon-card-button"
+                          href={`/poulinieres/${fields.slug}`}
+                        >
+                          DÉCOUVRIR
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            ) : (
+              <p class="etalons-empty">
+                Aucune poulinière n’est actuellement présentée.
+              </p>
+            )
+          }
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

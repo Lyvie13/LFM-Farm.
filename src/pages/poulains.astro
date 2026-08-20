@@ -1,0 +1,122 @@
+---
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+
+import { contentfulClient } from "../lib/contentful";
+
+import "../styles/global.css";
+import "../styles/etalons.css";
+
+const titre = "LFM Farm / Poulains";
+
+const response = await contentfulClient.getEntries({
+  content_type: "poulains",
+});
+
+const poulains = response.items
+  .filter(
+    (poulain: any) =>
+      poulain.fields.afficherSurLeSite !== false
+  )
+  .sort(
+    (a: any, b: any) =>
+      (a.fields.ordre || 999) -
+      (b.fields.ordre || 999)
+  );
+
+const getImageUrl = (url: string | undefined) => {
+  if (!url) return "";
+  if (url.startsWith("//")) return `https:${url}`;
+
+  return url;
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <main>
+      <section class="etalons-heading">
+        <h1>Nos poulains</h1>
+
+        <p>
+          Découvrez les poulains nés à LFM Farm.
+        </p>
+      </section>
+
+      <section class="etalons-section">
+        <div class="etalons-grid">
+          {
+            poulains.length > 0 ? (
+              poulains.map((poulain: any) => {
+                const fields = poulain.fields;
+
+                const photo = getImageUrl(
+                  fields.photoPrincipale
+                    ?.fields?.file?.url
+                );
+
+                return (
+                  <article class="etalon-card">
+                    {photo && (
+                      <img
+                        class="etalon-card-image"
+                        src={photo}
+                        alt={`Poulain ${fields.nom || ""}`}
+                        loading="lazy"
+                      />
+                    )}
+
+                    <div class="etalon-card-content">
+                      <h2>{fields.nom}</h2>
+
+                      {fields.sexe && (
+                        <p class="etalon-card-genotype">
+                          {fields.sexe}
+                        </p>
+                      )}
+
+                      {fields.description && (
+                        <p class="etalon-card-description">
+                          {fields.description}
+                        </p>
+                      )}
+
+                      {fields.slug && (
+                        <a
+                          class="etalon-card-button"
+                          href={`/poulains/${fields.slug}`}
+                        >
+                          DÉCOUVRIR
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            ) : (
+              <p class="etalons-empty">
+                Aucun poulain n’est actuellement présenté.
+              </p>
+            )
+          }
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,240 @@
+---
+const {
+  cheval,
+  typeCheval,
+  lienRetour,
+  texteRetour,
+} = Astro.props;
+
+const fields = cheval.fields;
+
+/* Récupère une image Contentful */
+const getImageUrl = (image: any) => {
+  const url = image?.fields?.file?.url;
+
+  if (!url) return "";
+
+  if (url.startsWith("//")) {
+    return `https:${url}`;
+  }
+
+  return url;
+};
+
+/* Photo principale */
+const photoPrincipale = getImageUrl(
+  fields.photoPrincipale
+);
+
+/* Galerie de plusieurs photos */
+const galerie =
+  fields.photos ||
+  fields.galerie ||
+  fields.galeriePhotos ||
+  [];
+
+/* Parents */
+const pere =
+  fields.pere?.fields?.nom ||
+  fields.pere ||
+  "";
+
+const mere =
+  fields.mere?.fields?.nom ||
+  fields.mere ||
+  "";
+
+/* Informations complémentaires */
+const informations =
+  fields.informations ||
+  fields.informationsComplementaires ||
+  "";
+
+/* Date de naissance */
+const dateNaissance = fields.dateNaissance
+  ? new Date(fields.dateNaissance).toLocaleDateString(
+      "fr-FR",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }
+    )
+  : "";
+---
+
+<main>
+  <div class="horse-back">
+    <a href={lienRetour}>
+      ← {texteRetour}
+    </a>
+  </div>
+
+  <section class="horse-detail">
+
+    <!-- PHOTOS -->
+
+    <div class="horse-gallery">
+      {
+        photoPrincipale ? (
+          <img
+            id="horse-main-image"
+            class="horse-main-image"
+            src={photoPrincipale}
+            alt={`${typeCheval} ${fields.nom || ""}`}
+          />
+        ) : (
+          <div class="horse-no-image">
+            Aucune photo disponible
+          </div>
+        )
+      }
+
+      {
+        galerie.length > 0 && (
+          <div class="horse-thumbnails">
+            {galerie.map((photo: any) => {
+              const photoUrl = getImageUrl(photo);
+
+              return (
+                photoUrl && (
+                  <button
+                    class="horse-thumbnail-button"
+                    type="button"
+                    data-image={photoUrl}
+                    aria-label={`Afficher une photo de ${fields.nom}`}
+                  >
+                    <img
+                      src={photoUrl}
+                      alt={fields.nom}
+                      loading="lazy"
+                    />
+                  </button>
+                )
+              );
+            })}
+          </div>
+        )
+      }
+    </div>
+
+    <!-- INFORMATIONS -->
+
+    <div class="horse-information">
+      <p class="horse-type">{typeCheval}</p>
+
+      <h1>{fields.nom}</h1>
+
+      {
+        (fields.sexe || dateNaissance) && (
+          <p class="horse-summary">
+            {fields.sexe}
+
+            {fields.sexe && dateNaissance && " – "}
+
+            {dateNaissance && `Né le ${dateNaissance}`}
+          </p>
+        )
+      }
+
+      {
+        fields.description && (
+          <p class="horse-description">
+            {fields.description}
+          </p>
+        )
+      }
+
+      {
+        (pere || mere) && (
+          <div class="horse-parents">
+            {
+              pere && (
+                <p>
+                  <strong>Père :</strong> {pere}
+                </p>
+              )
+            }
+
+            {
+              mere && (
+                <p>
+                  <strong>Mère :</strong> {mere}
+                </p>
+              )
+            }
+          </div>
+        )
+      }
+
+      {
+        fields.genotype && (
+          <div class="horse-extra">
+            <h2>Génotype</h2>
+            <p>{fields.genotype}</p>
+          </div>
+        )
+      }
+
+      {
+        informations && (
+          <div class="horse-extra">
+            <h2>Informations</h2>
+            <p>{informations}</p>
+          </div>
+        )
+      }
+
+      {
+        fields.prix && (
+          <p class="horse-price">
+            {fields.prix}
+          </p>
+        )
+      }
+
+      {
+        fields.facebook && (
+          <a
+            class="horse-facebook"
+            href={fields.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Suivre son évolution sur Facebook
+          </a>
+        )
+      }
+
+      <a
+        class="horse-contact-button"
+        href="/contact"
+      >
+        NOUS CONTACTER
+      </a>
+    </div>
+  </section>
+</main>
+
+<script>
+  const imagePrincipale =
+    document.querySelector<HTMLImageElement>(
+      "#horse-main-image"
+    );
+
+  const miniatures =
+    document.querySelectorAll<HTMLButtonElement>(
+      ".horse-thumbnail-button"
+    );
+
+  miniatures.forEach((miniature) => {
+    miniature.addEventListener("click", () => {
+      const nouvelleImage =
+        miniature.dataset.image;
+
+      if (imagePrincipale && nouvelleImage) {
+        imagePrincipale.src = nouvelleImage;
+      }
+    });
+  });
+</script>

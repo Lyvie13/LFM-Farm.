@@ -1,143 +1,262 @@
-/* =========================
-   HERO – PAGE ÉLEVAGE
-========================= */
-
-.breeding-hero {
-  position: relative;
-  height: clamp(350px, 40vw, 570px);
-  overflow: hidden;
-  background-color: #d9e9ef;
+:root {
+  --about-cream: #f8eadb;
+  --about-accent: #a83f1d;
+  --about-text: #28231f;
 }
 
-.breeding-hero-image {
-  position: absolute;
-  inset: 0;
+.about-page {
+  background-color: var(--about-cream);
+  color: var(--about-text);
+}
 
+/* =========================
+   HERO
+========================= */
+
+.about-hero {
+  position: relative;
+  height: clamp(360px, 41vw, 570px);
+  overflow: hidden;
+  background-color: #dceaf0;
+}
+
+.about-hero-image {
+  display: block;
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center;
 }
 
-.breeding-hero-overlay {
+.about-hero-title {
   position: absolute;
-  inset: 0;
-
-  background: linear-gradient(
-    90deg,
-    rgba(5, 5, 5, 0.35) 0%,
-    rgba(6, 6, 6, 0.1) 35%,
-    rgba(0, 0, 0, 0.08) 100%
-  );
-}
-
-.breeding-hero-title {
-  position: absolute;
-  z-index: 1;
-  top: 35px;
+  top: 32px;
   left: 50%;
+  width: min(68%, 720px);
   transform: translateX(-50%);
-
-  width: min(65%, 700px);
-  color: #a83f1d;
-  text-align: center;
+  color: var(--about-accent);
   font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.55);
 }
 
-.breeding-hero-title h1 {
+.about-hero-title h1 {
   margin: 0;
-  font-size: clamp(22px, 2.4vw, 36px);
+  font-size: clamp(24px, 3.1vw, 42px);
   font-weight: 700;
+  text-transform: uppercase;
 }
 
-.breeding-hero-title p {
-  margin: 3px 0 0;
-  font-size: clamp(20px, 2.3vw, 34px);
-  line-height: 1.1;
+.about-hero-title p {
+  margin: 2px 0 0;
+  font-size: clamp(22px, 3vw, 40px);
+  line-height: 1.08;
 }
 
-.apha-logo {
+.about-apha-logo {
   position: absolute;
-  z-index: 1;
-  top: 25px;
+  top: 24px;
   right: 4%;
-
-  width: clamp(90px, 11vw, 160px);
+  width: clamp(95px, 12vw, 165px);
   height: auto;
 }
 
 /* =========================
-   À PROPOS – INTRODUCTION
+   CONTENU
 ========================= */
 
-.about-introduction {
-  padding: 45px 5% 50px;
-  color: #28231f;
+.about-content {
+  width: min(100% - 48px, 1100px);
+  margin: 0 auto;
+  padding: 42px 0 55px;
 }
 
-.about-container {
-  width: min(100%, 1100px);
-  margin: 0 0 50px 80px;
-}
-
-.about-presentation {
+.about-grid {
   display: grid;
-  grid-template-columns: 1fr 0.9fr;
+  grid-template-columns: 1fr 0.92fr;
+  gap: clamp(35px, 6vw, 75px);
   align-items: start;
-  gap: 55px;
 }
 
-.about-presentation h1,
-.about-selection h2 {
-  margin: 0 0 20px;
-  color: #a83f1d;
-  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
-  font-size: 27px;
-  font-weight: 700;
+.about-grid--foals {
+  grid-template-columns: 0.92fr 1.08fr;
 }
 
-.about-presentation p,
-.about-selection p {
-  margin: 0 0 25px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.3;
+.about-grid--gite {
+  grid-template-columns: 1.05fr 0.95fr;
 }
 
-.about-landscape {
-  display: block;
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 7px;
+.about-section,
+.about-grid {
+  margin-bottom: 42px;
 }
 
-.about-selection {
-  margin: 0 0 50px 80px;
-}
-
-.about-selection h2 {
-  margin-bottom: 18px;
-}
-
-.about-selection p:last-child {
+.about-section:last-child {
   margin-bottom: 0;
 }
 
-.about-selection ul {
+.about-copy h2,
+.about-section h2 {
+  margin: 0 0 16px;
+  color: var(--about-accent);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 29px ;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.about-copy p,
+.about-section p,
+.about-copy li {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.about-copy p,
+.about-section p {
+  margin: 0 0 18px;
+}
+
+.about-copy p:last-child,
+.about-section p:last-child {
+  margin-bottom: 0;
+}
+
+.about-copy ul {
   margin: 0;
   padding-left: 22px;
 }
 
-.about-selection li {
-  margin-bottom: 7px;
+.about-copy li + li {
+  margin-top: 20px;
 }
 
-/* Espace entre les différents blocs de la page À propos */
-
-.about-presentation--spaced {
-  margin-top: 10px;
+.about-image {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 32vw, 390px);
+  border-radius: 7px;
+  object-fit: cover;
+  object-position: center;
 }
 
+.about-image--portrait {
+  height: clamp(390px, 44vw, 515px);
+}
+
+.about-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 20px;
+  border-radius: 6px;
+  background-color: var(--about-accent);
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.about-button:hover {
+  background-color: #7f2c11;
+}
+
+.about-meeting {
+  padding-top: 4px;
+}
+
+/* =========================
+   TABLETTE ET MOBILE
+========================= */
+
+@media (max-width: 760px) {
+  .about-hero {
+    height: 390px;
+  }
+
+  .about-hero-title {
+    top: 28px;
+    left: 20px;
+    width: calc(100% - 150px);
+    transform: none;
+    text-align: left;
+  }
+
+  .about-hero-title h1 {
+    font-size: 22px;
+  }
+
+  .about-hero-title p {
+    font-size: 20px;
+  }
+
+  .about-apha-logo {
+    width: 100px;
+    right: 18px;
+  }
+
+  .about-content {
+    width: min(100% - 36px, 1100px);
+    padding: 34px 0 45px;
+  }
+
+  .about-grid,
+  .about-grid--foals,
+  .about-grid--gite {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .about-grid--foals .about-image {
+    order: 2;
+  }
+
+  .about-grid--foals .about-copy {
+    order: 1;
+  }
+
+  .about-image,
+  .about-image--portrait {
+    height: 310px;
+  }
+
+  .about-section,
+  .about-grid {
+    margin-bottom: 34px;
+  }
+}
+
+@media (max-width: 430px) {
+  .about-hero {
+    height: 330px;
+  }
+
+  .about-hero-title {
+    width: calc(100% - 125px);
+  }
+
+  .about-hero-title h1 {
+    font-size: 18px;
+  }
+
+  .about-hero-title p {
+    font-size: 17px;
+  }
+
+  .about-apha-logo {
+    width: 82px;
+  }
+
+  .about-copy p,
+  .about-section p,
+  .about-copy li {
+    font-size: 14px;
+  }
+
+  .about-image,
+  .about-image--portrait {
+    height: 270px;
+  }
+}

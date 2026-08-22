@@ -1,0 +1,144 @@
+.legal-page {
+  background-color: #fff8ef;
+  color: #28231f;
+}
+
+.legal-header {
+  padding: 70px 5%;
+  background-color: #f8eadb;
+  text-align: center;
+}
+
+.legal-kicker {
+  margin: 0 0 10px;
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.legal-header h1 {
+  margin: 0 0 12px;
+  color: #28231f;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 400;
+}
+
+.legal-header > p:last-child {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.legal-content {
+  width: min(100% - 40px, 900px);
+  margin: 0 auto;
+  padding: 60px 0 80px;
+}
+
+.legal-content section {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(168, 63, 29, 0.22);
+}
+
+.legal-content section:first-of-type {
+  padding-top: 0;
+}
+
+.legal-content h2 {
+  margin: 0 0 16px;
+  color: #a83f1d;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: clamp(23px, 3vw, 29px);
+}
+
+.legal-content p,
+.legal-content li,
+.legal-content address,
+.legal-content th,
+.legal-content td {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.legal-content ul {
+  padding-left: 22px;
+}
+
+.legal-content li + li {
+  margin-top: 7px;
+}
+
+.legal-content a {
+  color: #a83f1d;
+  text-decoration: underline;
+}
+
+.legal-content address {
+  font-style: normal;
+}
+
+.legal-warning {
+  margin-bottom: 45px;
+  padding: 22px 25px;
+  border-left: 4px solid #a83f1d;
+  background-color: #f8eadb;
+}
+
+.legal-warning strong {
+  color: #a83f1d;
+  font-family: Arial, sans-serif;
+}
+
+.legal-warning p {
+  margin: 8px 0 0;
+}
+
+.legal-table-wrapper {
+  overflow-x: auto;
+}
+
+.legal-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.legal-content th,
+.legal-content td {
+  padding: 14px;
+  border: 1px solid #ddc8b3;
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal-content th {
+  background-color: #f8eadb;
+  color: #7f2c11;
+}
+
+@media (max-width: 600px) {
+  .legal-header {
+    padding: 50px 20px;
+  }
+
+  .legal-content {
+    width: min(100% - 30px, 900px);
+    padding: 40px 0 60px;
+  }
+
+  .legal-content section {
+    padding: 24px 0;
+  }
+
+  .legal-content p,
+  .legal-content li,
+  .legal-content address,
+  .legal-content th,
+  .legal-content td {
+    font-size: 14px;
+  }
+}

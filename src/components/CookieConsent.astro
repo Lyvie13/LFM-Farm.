@@ -1,0 +1,307 @@
+<div class="cookie-banner" data-cookie-banner hidden>
+  <div class="cookie-banner__content">
+    <h2>Votre vie privée</h2>
+    <p>
+      Nous utilisons des services externes pour afficher les avis clients et la
+      carte Google Maps. Vous pouvez accepter ou refuser leur chargement.
+    </p>
+
+    <div class="cookie-preferences" data-cookie-preferences hidden>
+      <label>
+        <input type="checkbox" data-cookie-external />
+        <span>
+          <strong>Contenus externes</strong>
+          <small>Elfsight (avis clients) et Google Maps</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="cookie-banner__actions">
+      <button type="button" class="cookie-button" data-cookie-reject>
+        Tout refuser
+      </button>
+      <button type="button" class="cookie-button cookie-button--secondary" data-cookie-customize>
+        Personnaliser
+      </button>
+      <button type="button" class="cookie-button" data-cookie-accept>
+        Tout accepter
+      </button>
+      <button type="button" class="cookie-button" data-cookie-save hidden>
+        Enregistrer mes choix
+      </button>
+    </div>
+
+    <a href="/politique-de-confidentialite">En savoir plus</a>
+  </div>
+</div>
+
+<button type="button" class="cookie-manage" data-cookie-open hidden>
+  Gérer mes cookies
+</button>
+
+<script is:inline>
+  (() => {
+    const storageKey = "lfm-cookie-consent";
+    const consentDuration = 180 * 24 * 60 * 60 * 1000;
+    const banner = document.querySelector("[data-cookie-banner]");
+    const preferences = document.querySelector("[data-cookie-preferences]");
+    const externalCheckbox = document.querySelector("[data-cookie-external]");
+    const manageButton = document.querySelector("[data-cookie-open]");
+    const saveButton = document.querySelector("[data-cookie-save]");
+    const customizeButton = document.querySelector("[data-cookie-customize]");
+    const acceptButton = document.querySelector("[data-cookie-accept]");
+    const rejectButton = document.querySelector("[data-cookie-reject]");
+
+    if (!banner || !externalCheckbox) return;
+
+    const readChoice = () => {
+      try {
+        const choice = JSON.parse(localStorage.getItem(storageKey));
+
+        if (
+          !choice?.savedAt ||
+          Date.now() - new Date(choice.savedAt).getTime() > consentDuration
+        ) {
+          localStorage.removeItem(storageKey);
+          return null;
+        }
+
+        return choice;
+      } catch {
+        return null;
+      }
+    };
+
+    const enableExternalMedia = () => {
+      document.querySelectorAll("[data-cookie-src]").forEach((element) => {
+        if (!element.getAttribute("src")) {
+          element.setAttribute("src", element.dataset.cookieSrc);
+        }
+      });
+
+      document.querySelectorAll("[data-cookie-script]").forEach((element) => {
+        if (element.dataset.loaded === "true") return;
+
+        const script = document.createElement("script");
+        script.src = element.dataset.src;
+        script.async = true;
+        document.head.appendChild(script);
+        element.dataset.loaded = "true";
+      });
+
+      document.querySelectorAll("[data-cookie-placeholder]").forEach((element) => {
+        element.hidden = true;
+      });
+    };
+
+    const closeBanner = () => {
+      banner.hidden = true;
+      manageButton.hidden = false;
+    };
+
+    const saveChoice = (externalMedia) => {
+      const previousChoice = readChoice();
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ externalMedia, savedAt: new Date().toISOString() })
+      );
+
+      if (externalMedia) enableExternalMedia();
+      closeBanner();
+
+      if (previousChoice?.externalMedia && !externalMedia) {
+        window.location.reload();
+      }
+    };
+
+    const openPreferences = () => {
+      const choice = readChoice();
+      externalCheckbox.checked = Boolean(choice?.externalMedia);
+      preferences.hidden = false;
+      customizeButton.hidden = true;
+      acceptButton.hidden = true;
+      saveButton.hidden = false;
+      banner.hidden = false;
+      manageButton.hidden = true;
+    };
+
+    acceptButton.addEventListener("click", () => saveChoice(true));
+    rejectButton.addEventListener("click", () => saveChoice(false));
+    customizeButton.addEventListener("click", openPreferences);
+    saveButton.addEventListener("click", () => saveChoice(externalCheckbox.checked));
+    manageButton.addEventListener("click", openPreferences);
+
+    document.addEventListener("click", (event) => {
+      if (event.target.closest(".js-cookie-settings")) openPreferences();
+    });
+
+    const choice = readChoice();
+    if (!choice) {
+      banner.hidden = false;
+    } else {
+      manageButton.hidden = false;
+      if (choice.externalMedia) enableExternalMedia();
+    }
+  })();
+</script>
+
+<style>
+  .cookie-banner[hidden],
+  .cookie-manage[hidden],
+  .cookie-preferences[hidden],
+  .cookie-button[hidden],
+  :global([data-cookie-placeholder][hidden]) {
+    display: none !important;
+  }
+
+  .cookie-banner {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(35, 17, 10, 0.42);
+  }
+
+  .cookie-banner__content {
+    width: min(100%, 760px);
+    padding: 25px;
+    border-radius: 12px;
+    background: #fff8ef;
+    box-shadow: 0 8px 30px rgba(35, 17, 10, 0.28);
+    color: #51210f;
+  }
+
+  .cookie-banner h2 {
+    margin: 0 0 10px;
+    font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+    font-size: 28px;
+  }
+
+  .cookie-banner p {
+    margin: 0 0 18px;
+    color: #35251e;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .cookie-preferences {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #d9b9a6;
+    border-radius: 8px;
+  }
+
+  .cookie-preferences label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #35251e;
+    font-family: Arial, sans-serif;
+  }
+
+  .cookie-preferences input {
+    width: 19px;
+    height: 19px;
+    accent-color: #a83f1d;
+  }
+
+  .cookie-preferences span {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cookie-preferences small {
+    font-size: 13px;
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .cookie-button,
+  .cookie-manage {
+    border: 1px solid #a83f1d;
+    border-radius: 8px;
+    background: #a83f1d;
+    color: white;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+  }
+
+  .cookie-button {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+
+  .cookie-button--secondary {
+    background: transparent;
+    color: #a83f1d;
+  }
+
+  .cookie-banner a {
+    color: #7c2d12;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+  }
+
+  .cookie-manage {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    padding: 9px 13px;
+    font-size: 12px;
+    box-shadow: 0 4px 14px rgba(35, 17, 10, 0.22);
+  }
+
+  :global(.cookie-placeholder) {
+    width: 100%;
+    min-height: 190px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #d9b9a6;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.62);
+    color: #51210f;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
+  :global(.cookie-placeholder button) {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 7px;
+    background: #a83f1d;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .cookie-banner {
+      padding: 10px;
+    }
+
+    .cookie-banner__content {
+      padding: 20px;
+    }
+
+    .cookie-banner__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

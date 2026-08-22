@@ -237,3 +237,16 @@
   color: #a83f1d;
   text-decoration: underline;
 }
+
+.form-privacy-note {
+  margin: 0;
+  color: #5b514b;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.form-privacy-note a {
+  color: #a83f1d;
+  text-decoration: underline;
+}

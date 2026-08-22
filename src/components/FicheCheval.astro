@@ -8,7 +8,10 @@ const {
 
 const fields = cheval.fields;
 
-/* Récupère une image Contentful */
+/* =========================
+   IMAGES CONTENTFUL
+========================= */
+
 const getImageUrl = (image: any) => {
   const url = image?.fields?.file?.url;
 
@@ -21,36 +24,61 @@ const getImageUrl = (image: any) => {
   return url;
 };
 
-/* Photo principale */
 const photoPrincipale = getImageUrl(
   fields.photoPrincipale
 );
 
-/* Galerie de plusieurs photos */
 const galerie =
-  fields.photos ||
   fields.galerie ||
+  fields.photos ||
   fields.galeriePhotos ||
   [];
 
-/* Parents */
-const pere =
-  fields.pere?.fields?.nom ||
-  fields.pere ||
+/* =========================
+   INFORMATIONS GÉNÉRALES
+========================= */
+
+const description =
+  fields.descriptionCourte ||
+  fields.description ||
   "";
 
-const mere =
-  fields.mere?.fields?.nom ||
-  fields.mere ||
-  "";
-
-/* Informations complémentaires */
 const informations =
+  fields.resultatsGenetiques ||
   fields.informations ||
   fields.informationsComplementaires ||
   "";
 
-/* Date de naissance */
+const lienFacebook =
+  fields.lienFacebook ||
+  fields.facebook ||
+  "";
+
+/* =========================
+   PARENTS
+========================= */
+
+const getNomParent = (parent: any) => {
+  if (!parent) return "";
+
+  if (parent?.fields?.nom) {
+    return parent.fields.nom;
+  }
+
+  if (typeof parent === "string") {
+    return parent;
+  }
+
+  return "";
+};
+
+const pere = getNomParent(fields.pere);
+const mere = getNomParent(fields.mere);
+
+/* =========================
+   DATE DE NAISSANCE
+========================= */
+
 const dateNaissance = fields.dateNaissance
   ? new Date(fields.dateNaissance).toLocaleDateString(
       "fr-FR",
@@ -61,6 +89,13 @@ const dateNaissance = fields.dateNaissance
       }
     )
   : "";
+
+const sexe = fields.sexe || "";
+
+const texteNaissance =
+  sexe.toLowerCase().startsWith("f")
+    ? "Née le"
+    : "Né le";
 ---
 
 <main>
@@ -72,7 +107,9 @@ const dateNaissance = fields.dateNaissance
 
   <section class="horse-detail">
 
-    <!-- PHOTOS -->
+    <!-- =========================
+         PHOTOS
+    ========================== -->
 
     <div class="horse-gallery">
       {
@@ -102,11 +139,11 @@ const dateNaissance = fields.dateNaissance
                     class="horse-thumbnail-button"
                     type="button"
                     data-image={photoUrl}
-                    aria-label={`Afficher une photo de ${fields.nom}`}
+                    aria-label={`Afficher une autre photo de ${fields.nom}`}
                   >
                     <img
                       src={photoUrl}
-                      alt={fields.nom}
+                      alt={`${fields.nom} à LFM Farm`}
                       loading="lazy"
                     />
                   </button>
@@ -118,32 +155,50 @@ const dateNaissance = fields.dateNaissance
       }
     </div>
 
-    <!-- INFORMATIONS -->
+    <!-- =========================
+         INFORMATIONS
+    ========================== -->
 
     <div class="horse-information">
-      <p class="horse-type">{typeCheval}</p>
+      <p class="horse-type">
+        {typeCheval}
+      </p>
 
       <h1>{fields.nom}</h1>
 
       {
-        (fields.sexe || dateNaissance) && (
+        (sexe || dateNaissance) && (
           <p class="horse-summary">
-            {fields.sexe}
+            {sexe}
 
-            {fields.sexe && dateNaissance && " – "}
+            {sexe && dateNaissance && " – "}
 
-            {dateNaissance && `Né le ${dateNaissance}`}
+            {
+              dateNaissance &&
+              `${texteNaissance} ${dateNaissance}`
+            }
           </p>
         )
       }
 
       {
-        fields.description && (
+        description && (
           <p class="horse-description">
-            {fields.description}
+            {description}
           </p>
         )
       }
+
+      {
+        fields.robe && (
+          <p class="horse-coat">
+            <strong>Robe :</strong>{" "}
+            {fields.robe}
+          </p>
+        )
+      }
+
+      <!-- PARENTS -->
 
       {
         (pere || mere) && (
@@ -151,7 +206,8 @@ const dateNaissance = fields.dateNaissance
             {
               pere && (
                 <p>
-                  <strong>Père :</strong> {pere}
+                  <strong>Père :</strong>{" "}
+                  {pere}
                 </p>
               )
             }
@@ -159,7 +215,8 @@ const dateNaissance = fields.dateNaissance
             {
               mere && (
                 <p>
-                  <strong>Mère :</strong> {mere}
+                  <strong>Mère :</strong>{" "}
+                  {mere}
                 </p>
               )
             }
@@ -167,23 +224,41 @@ const dateNaissance = fields.dateNaissance
         )
       }
 
+      <!-- GÉNOTYPE -->
+
       {
         fields.genotype && (
           <div class="horse-extra">
             <h2>Génotype</h2>
+
             <p>{fields.genotype}</p>
           </div>
         )
       }
 
+      <!-- INFORMATIONS COMPLÉMENTAIRES -->
+
       {
         informations && (
           <div class="horse-extra">
             <h2>Informations</h2>
+
             <p>{informations}</p>
           </div>
         )
       }
+
+      <!-- STATUT DU POULAIN -->
+
+      {
+        fields.statut && (
+          <p class="horse-status">
+            {fields.statut}
+          </p>
+        )
+      }
+
+      <!-- PRIX -->
 
       {
         fields.prix && (
@@ -193,28 +268,40 @@ const dateNaissance = fields.dateNaissance
         )
       }
 
+      <!-- FACEBOOK -->
+
       {
-        fields.facebook && (
+        lienFacebook && (
           <a
             class="horse-facebook"
-            href={fields.facebook}
+            href={lienFacebook}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Suivre son évolution sur Facebook
+            Voir plus de photos ou suivre son évolution sur Facebook
           </a>
         )
       }
 
-      <a
-        class="horse-contact-button"
-        href="/contact"
-      >
-        NOUS CONTACTER
-      </a>
+      <!-- BOUTON DE CONTACT -->
+
+      {
+        fields.reservable !== false && (
+          <a
+            class="horse-contact-button"
+            href="/contact"
+          >
+            NOUS CONTACTER
+          </a>
+        )
+      }
     </div>
   </section>
 </main>
+
+<!-- =========================
+     CHANGEMENT DE PHOTO
+========================== -->
 
 <script>
   const imagePrincipale =

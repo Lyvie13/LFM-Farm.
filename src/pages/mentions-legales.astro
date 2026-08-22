@@ -1,0 +1,142 @@
+---
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+import "../styles/global.css";
+import "../styles/legal.css";
+
+const titre = "Mentions légales | LFM Farm";
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Mentions légales du site internet LFM Farm."
+    />
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <main class="legal-page">
+      <header class="legal-header">
+        <p class="legal-kicker">Informations juridiques</p>
+        <h1>Mentions légales</h1>
+        <p>Dernière mise à jour : 22 août 2026</p>
+      </header>
+
+      <div class="legal-content">
+        <aside class="legal-warning" aria-label="Informations à compléter">
+          <strong>Avant la publication définitive</strong>
+          <p>
+            Les informations signalées « À COMPLÉTER » doivent être remplacées
+            par les renseignements officiels de LFM Farm.
+          </p>
+        </aside>
+
+        <section>
+          <h2>1. Éditeur du site</h2>
+          <p>Le présent site est édité par :</p>
+          <ul>
+            <li><strong>Nom commercial :</strong> LFM Farm</li>
+            <li><strong>Dénomination légale :</strong> À COMPLÉTER</li>
+            <li><strong>Forme juridique :</strong> À COMPLÉTER</li>
+            <li><strong>SIREN / SIRET :</strong> À COMPLÉTER</li>
+            <li><strong>RCS / RNE :</strong> À COMPLÉTER, si applicable</li>
+            <li><strong>TVA intracommunautaire :</strong> À COMPLÉTER, si applicable</li>
+            <li><strong>Adresse :</strong> Lieu-dit Maiguezin, 43150 Salettes, France</li>
+            <li><strong>Téléphone :</strong> 06 28 33 11 62 / 06 34 96 17 27</li>
+            <li>
+              <strong>E-mail :</strong>
+              <a href="mailto:contact@lfmfarm.fr">contact@lfmfarm.fr</a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>2. Direction de la publication</h2>
+          <p>
+            La direction de la publication est assurée par :
+            <strong>À COMPLÉTER</strong>.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Conception du site</h2>
+          <p>
+            Le site a été pensé et conçu par <strong>Lyvie Studio</strong>.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Hébergement</h2>
+          <p>Le site est hébergé par :</p>
+          <address>
+            <strong>Netlify, Inc.</strong><br />
+            101 2nd Street<br />
+            San Francisco, CA 94105<br />
+            États-Unis<br />
+            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer">
+              www.netlify.com
+            </a>
+          </address>
+        </section>
+
+        <section>
+          <h2>5. Propriété intellectuelle</h2>
+          <p>
+            Sauf mention contraire, les textes, photographies, graphismes,
+            logos et autres contenus présents sur ce site appartiennent à LFM
+            Farm ou sont utilisés avec l’autorisation de leurs titulaires.
+          </p>
+          <p>
+            Toute reproduction, représentation, adaptation ou exploitation,
+            totale ou partielle, sans autorisation écrite préalable est
+            interdite, sous réserve des exceptions prévues par la loi.
+          </p>
+          <p><strong>Crédits photographiques :</strong> À COMPLÉTER.</p>
+        </section>
+
+        <section>
+          <h2>6. Responsabilité</h2>
+          <p>
+            LFM Farm s’efforce de fournir des informations exactes et à jour.
+            Les informations relatives aux chevaux, disponibilités, tarifs et
+            prestations sont données à titre indicatif et peuvent évoluer.
+            Elles ne constituent pas une offre contractuelle tant qu’elles
+            n’ont pas été confirmées directement par LFM Farm.
+          </p>
+          <p>
+            LFM Farm ne peut garantir l’absence d’interruption ou d’erreur sur
+            le site et ne saurait être tenue responsable des dommages résultant
+            d’une utilisation du site ou d’un site externe accessible par lien.
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Données personnelles</h2>
+          <p>
+            Les modalités de traitement des données personnelles sont décrites
+            dans notre
+            <a href="/politique-de-confidentialite">politique de confidentialité</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>8. Droit applicable</h2>
+          <p>
+            Le présent site et ses mentions légales sont soumis au droit
+            français. En cas de difficulté, les parties chercheront d’abord une
+            solution amiable avant toute procédure judiciaire.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>

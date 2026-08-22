@@ -1,0 +1,182 @@
+---
+import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
+import "../styles/global.css";
+import "../styles/gite.css";
+
+const titre = "Gîte équestre et locations de vacances | LFM Farm";
+
+const images = {
+  facade:
+    "https://res.cloudinary.com/dhmehfgjo/image/upload/v1786696058/gite_face.jpg",
+  prairie:
+    "https://res.cloudinary.com/dhmehfgjo/image/upload/v1786704058/chevaux_prairie.jpg",
+  mezenc:
+    "https://res.cloudinary.com/dhmehfgjo/image/upload/v1786737208/volcans-auvergne-haute-loire-mezenc-2-1920x1080-f50_50_pkwcfl.jpg",
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Découvrez le gîte équestre LFM Farm en Haute-Loire, au cœur de la campagne et à proximité du Mézenc."
+    />
+    <title>{titre}</title>
+  </head>
+
+  <body>
+    <Navbar />
+
+    <main>
+      <section class="gite-hero">
+        <img
+          class="gite-hero-image"
+          src={images.facade}
+          alt="La maison du gîte LFM Farm"
+        />
+        <div class="gite-hero-overlay"></div>
+
+        <div class="gite-labels" aria-label="Labels touristiques">
+          <div class="gite-label-placeholder">LOGO<br />MEUBLÉ</div>
+          <div class="gite-label-placeholder">LOGO<br />TOURISME</div>
+        </div>
+
+        <div class="gite-hero-title">
+          <h1>Gîte équestre et<br />locations de vacances</h1>
+        </div>
+
+        <div class="gite-hero-text">
+          <p>
+            Situé dans un charmant village de campagne,<br />
+            entre rivières et montagnes surplombant la vallée de la Loire.
+          </p>
+          <p>
+            Entouré de nos chevaux et sans aucun vis-à-vis,<br />
+            le gîte est installé dans l’ancienne école du village, entièrement
+            rénovée pour vous offrir tout le confort nécessaire à un séjour
+            reposant et authentique.
+          </p>
+        </div>
+      </section>
+
+      <section class="gite-features">
+        <div class="gite-features-grid">
+          <article class="gite-feature gite-feature--intro">
+            <div class="gite-icon" aria-hidden="true">⌂</div>
+            <h2>Un hébergement<br />chaleureux et tout confort</h2>
+            <p>
+              Le gîte a une capacité de 10 personnes, avec deux chambres de 4
+              et un canapé-lit, deux WC ainsi que 2 salles de bain, une cuisine
+              ouverte toute équipée et un coin salon.
+            </p>
+            <p>
+              Pour rendre votre séjour aussi agréable que possible, vous
+              bénéficiez également de nombreux équipements : lave-linge,
+              lave-vaisselle, four, micro-ondes, bouilloire, appareil à raclette,
+              appareil à fondue et crêpière.
+            </p>
+          </article>
+
+          <div class="gite-media-placeholder gite-interior-placeholder">
+            <span>PHOTO INTÉRIEURE DU GÎTE</span>
+          </div>
+
+          <img
+            class="gite-feature-image"
+            src={images.prairie}
+            alt="Les chevaux dans les prés autour du gîte"
+            loading="lazy"
+          />
+
+          <div class="gite-feature-stack">
+            <article class="gite-feature">
+              <div class="gite-icon" aria-hidden="true">▣</div>
+              <h2>Un accueil toute l’année</h2>
+              <p>
+                Nous vous accueillons toute l’année, à la nuitée, en week-end ou
+                pour plusieurs jours ou semaines, que vous soyez cavaliers,
+                marcheurs, motards, vététistes ou simplement vacanciers.
+              </p>
+            </article>
+
+            <article class="gite-feature">
+              <div class="gite-icon gite-icon--horse" aria-hidden="true">♞</div>
+              <h2>Un accueil dédié<br />aux cavaliers</h2>
+              <p>
+                Pour les cavaliers, foin, granulés, paddocks, douche, boxes et
+                sellerie sur place, maréchal-ferrant et dentiste équin sur place
+                si besoin !
+              </p>
+            </article>
+          </div>
+
+          <img
+            class="gite-feature-image"
+            src={images.mezenc}
+            alt="Le massif du Mézenc près du gîte"
+            loading="lazy"
+          />
+
+          <article class="gite-feature gite-feature--location">
+            <div class="gite-icon" aria-hidden="true">⌁</div>
+            <h2>Une situation idéale</h2>
+            <p>
+              Nous sommes situés à 1100 m d’altitude, à 30 min de la station de
+              ski du Mézenc.
+            </p>
+          </article>
+        </div>
+
+        <aside class="gite-restaurant">
+          <div class="gite-restaurant-icon" aria-hidden="true">♨</div>
+          <p>
+            Un bar restaurant / pizzeria ouvert à l’année se trouve à 5 min en
+            voiture, proposant aussi des plats à emporter ou livrés au gîte.
+          </p>
+        </aside>
+      </section>
+
+      <section class="gite-discovery">
+        <h2>Une région riche en découvertes</h2>
+
+        <div class="gite-discovery-top">
+          <div class="gite-discovery-copy">
+            <div class="gite-icon" aria-hidden="true">⌁</div>
+            <p>
+              De nombreux chemins de randonnées sont présents autour du village
+              (Chemin de Stevenson, Saint-Jacques-de-Compostelle, GR40 et GR18).
+            </p>
+            <p>
+              De nombreux coins à visiter comme le Lac Bleu, ainsi que des
+              villages touristiques : le Lac d’Issarlès, Goudet, Coucouron ainsi
+              que la ville du Puy-en-Velay située à 30 min.
+            </p>
+          </div>
+
+          <div class="gite-media-placeholder gite-discovery-main">
+            <span>PHOTO DE LA RÉGION</span>
+          </div>
+        </div>
+
+        <div class="gite-gallery">
+          <div class="gite-media-placeholder"><span>PHOTO</span></div>
+          <div class="gite-media-placeholder"><span>PHOTO</span></div>
+          <div class="gite-media-placeholder"><span>PHOTO</span></div>
+        </div>
+      </section>
+
+      <section class="gite-booking">
+        <div class="gite-booking-placeholder">
+          <p>EMPLACEMENT DU MODULE DE RÉSERVATION</p>
+          <a class="gite-booking-button" href="/contact">Nous contacter</a>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

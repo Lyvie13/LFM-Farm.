@@ -177,3 +177,51 @@
   font-size: 22px;
   color: #a83f1d;
 }
+
+@media (max-width: 850px) {
+  .breeder-selection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .breeder-selection-card {
+    min-height: 390px;
+  }
+
+  .breeder-selection-content {
+    padding-top: 75px;
+  }
+}
+
+@media (max-width: 560px) {
+  .breeders-hero {
+    height: 300px;
+  }
+
+  .breeders-hero-image {
+    object-position: 58% center;
+  }
+
+  .breeder-selection,
+  .marriages-section {
+    padding: 40px 5%;
+  }
+
+  .breeder-selection-card {
+    min-height: 510px;
+  }
+
+  .breeder-selection-content {
+    width: 100%;
+    padding: 35px 25px 250px;
+  }
+
+  .breeder-selection-card > img {
+    width: 75%;
+    height: 60%;
+  }
+
+  .breeding-season-button {
+    margin-top: 35px;
+    text-align: center;
+  }
+}

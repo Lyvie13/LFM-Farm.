@@ -541,3 +541,170 @@ object-position: right center;
 .social-links a:hover {
   transform: translateY(-2px);
 }
+
+@media (max-width: 900px) {
+  .hero {
+    height: 520px;
+  }
+
+  .hero-image {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% center;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.98) 0%, rgba(248, 234, 219, 0.82) 50%, rgba(248, 234, 219, 0.15) 100%);
+  }
+
+  .hero-content {
+    padding-top: 70px;
+  }
+
+  .hero p,
+  .foals-content p,
+  .breeders-content p,
+  .available-foals-content p,
+  .gite-introduction p {
+    font-size: 22px;
+  }
+
+  .foals-container,
+  .breeders-container {
+    grid-template-columns: 1fr;
+  }
+
+  .foals-content {
+    order: -1;
+  }
+
+  .foals-image {
+    height: 330px;
+  }
+
+  .breeders-container {
+    gap: 40px;
+  }
+
+  .available-foals {
+    height: 520px;
+  }
+
+  .available-foals-image {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 65% center;
+  }
+
+  .available-foals-overlay {
+    background: linear-gradient(90deg, rgba(248, 234, 219, 1) 0%, rgba(248, 234, 219, 0.9) 52%, rgba(248, 234, 219, 0.18) 100%);
+  }
+
+  .gite-section {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .gite-introduction-content {
+    padding: 45px 5%;
+  }
+
+  .gite-photo {
+    height: 390px;
+  }
+
+  .gite-booking-card {
+    right: 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 560px;
+  }
+
+  .hero-content {
+    width: 90%;
+    padding-top: 55px;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.98) 0%, rgba(248, 234, 219, 0.88) 62%, rgba(248, 234, 219, 0.38) 100%);
+  }
+
+  .hero-line {
+    margin: 28px 0;
+  }
+
+  .hero p {
+    max-width: 280px;
+    margin-bottom: 35px;
+    font-size: 19px;
+  }
+
+  .foals-section,
+  .breeders-section,
+  .reviews-section {
+    padding: 45px 5%;
+  }
+
+  .foals-content h2,
+  .breeders-content h2,
+  .available-foals-content h2,
+  .gite-introduction h2,
+  .reviews-container > h2 {
+    font-size: 32px;
+  }
+
+  .foals-line {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .foals-image {
+    height: 245px;
+  }
+
+  .breeders-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .breeder-card {
+    height: 230px;
+  }
+
+  .available-foals {
+    height: 590px;
+  }
+
+  .available-foals-content {
+    padding-top: 45px;
+  }
+
+  .available-foals-content p {
+    max-width: 270px;
+    font-size: 19px;
+  }
+
+  .gite-introduction p {
+    font-size: 19px;
+  }
+
+  .gite-photo {
+    height: 300px;
+  }
+
+  .gite-booking-card {
+    left: 5%;
+    right: 5%;
+    bottom: 18px;
+  }
+
+  .social-content h3 {
+    font-size: 22px;
+  }
+}

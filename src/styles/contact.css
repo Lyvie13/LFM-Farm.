@@ -250,3 +250,36 @@
   color: #a83f1d;
   text-decoration: underline;
 }
+
+@media (max-width: 800px) {
+  .contact-section {
+    min-height: auto;
+    padding: 45px 5%;
+  }
+
+  .contact-top {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .contact-map {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-card,
+  .contact-form {
+    padding: 22px 18px;
+  }
+
+  .contact-details,
+  .contact-details a {
+    font-size: 13px;
+  }
+
+  .contact-map iframe,
+  .contact-map .cookie-placeholder {
+    height: 260px;
+  }
+}

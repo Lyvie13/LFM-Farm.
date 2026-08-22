@@ -147,3 +147,41 @@
   background-color: #7f2c11;
 }
 
+@media (max-width: 850px) {
+  .horse-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .horse-main-image,
+  .horse-no-image {
+    height: 500px;
+  }
+}
+
+@media (max-width: 560px) {
+  .horse-back,
+  .horse-detail {
+    width: calc(100% - 24px);
+  }
+
+  .horse-detail {
+    margin-bottom: 40px;
+  }
+
+  .horse-main-image,
+  .horse-no-image {
+    height: 390px;
+  }
+
+  .horse-thumbnails {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .horse-thumbnail-button img {
+    height: 72px;
+  }
+
+  .horse-information {
+    padding: 28px 22px;
+  }
+}

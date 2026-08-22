@@ -105,3 +105,31 @@
   text-align: center;
 }
 
+@media (max-width: 900px) {
+  .etalons-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .etalons-heading {
+    padding: 40px 5%;
+  }
+
+  .etalons-section {
+    padding: 40px 5%;
+  }
+
+  .etalons-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .etalon-card-image {
+    height: 260px;
+  }
+
+  .etalon-card-content {
+    padding: 22px;
+  }
+}

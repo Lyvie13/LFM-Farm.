@@ -178,4 +178,37 @@ import CookieConsent from "./CookieConsent.astro";
     text-decoration: underline;
   }
 
+  @media (max-width: 700px) {
+    .site-footer,
+    .footer-container {
+      min-height: auto;
+    }
+
+    .footer-container {
+      width: 90%;
+      padding: 35px 0 24px;
+    }
+
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .footer-contact {
+      gap: 16px;
+    }
+
+    .footer-contact a,
+    .footer-contact-row {
+      font-size: 13px;
+    }
+
+    .footer-bottom {
+      margin-top: 35px;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+
 </style>

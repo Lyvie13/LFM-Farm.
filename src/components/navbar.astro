@@ -1,4 +1,4 @@
-<nav class="site-header">
+<header class="site-header">
   <a class="logo-link" href="/" aria-label="Accueil LFM Farm">
     <img
       class="logo"
@@ -7,7 +7,19 @@
     />
   </a>
 
-  <nav aria-label="Navigation principale">
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="main-navigation"
+    aria-label="Ouvrir le menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="main-navigation" class="main-navigation" aria-label="Navigation principale">
     <a href="/">Accueil</a>
     <a href="/a-propos">À propos</a>
     <a href="/reproducteurs">Reproducteurs</a>
@@ -18,5 +30,28 @@
   </nav>
 
   <a class="contact-button" href="/contact">NOUS CONTACTER</a>
-</nav>
+</header>
 
+<script>
+  const header = document.querySelector(".site-header");
+  const menuButton = document.querySelector(".menu-toggle") as HTMLButtonElement;
+  const menuLinks = document.querySelectorAll(".main-navigation a");
+
+  const closeMenu = () => {
+    header?.classList.remove("menu-open");
+    menuButton?.setAttribute("aria-expanded", "false");
+    menuButton?.setAttribute("aria-label", "Ouvrir le menu");
+  };
+
+  menuButton?.addEventListener("click", () => {
+    const isOpen = header?.classList.toggle("menu-open") ?? false;
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+    menuButton.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+  });
+
+  menuLinks.forEach((link) => link.addEventListener("click", closeMenu));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
+</script>

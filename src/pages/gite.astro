@@ -14,6 +14,17 @@ const images = {
   mezenc:
     "https://res.cloudinary.com/dhmehfgjo/image/upload/v1786737208/volcans-auvergne-haute-loire-mezenc-2-1920x1080-f50_50_pkwcfl.jpg",
 };
+
+const photosInterieur = [
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666676/cache_14598929_tklunj.jpg",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666668/cache_14598926_dqhegd.jpg",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666664/cache_14598925_tgscdb.png",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666652/cache_13717987_tekbfk.jpg",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666648/cache_13717986_rmszwr.jpg",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666639/cache_13717982_wqaozy.jpg",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666635/cache_13717981_qv8xa3.png",
+  "https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666631/cache_13717980_vou29v.jpg",
+];
 ---
 
 <!doctype html>
@@ -41,8 +52,16 @@ const images = {
         <div class="gite-hero-overlay"></div>
 
         <div class="gite-labels" aria-label="Labels touristiques">
-          <div class="gite-label-placeholder">LOGO<br />MEUBLÉ</div>
-          <div class="gite-label-placeholder">LOGO<br />TOURISME</div>
+          <img
+            class="gite-label-image"
+            src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666684/h%C3%A9bergement_respirando.jpg"
+            alt="Label Hébergement Respirando"
+          />
+          <img
+            class="gite-label-image"
+            src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666680/cheval_etape.jpg"
+            alt="Label Cheval Étape"
+          />
         </div>
 
         <div class="gite-hero-title">
@@ -66,8 +85,10 @@ const images = {
       <section class="gite-features">
         <div class="gite-features-grid">
           <article class="gite-feature gite-feature--intro">
-            <div class="gite-icon" aria-hidden="true">⌂</div>
-            <h2>Un hébergement<br />chaleureux et tout confort</h2>
+            <div class="gite-icon" aria-hidden="true">
+              <img src="/icons/ci--house-01.svg" alt="" />
+            </div>
+            <h2>Un hébergement chaleureux et tout confort</h2>
             <p>
               Le gîte a une capacité de 10 personnes, avec deux chambres de 4
               et un canapé-lit, deux WC ainsi que 2 salles de bain, une cuisine
@@ -81,9 +102,102 @@ const images = {
             </p>
           </article>
 
-          <div class="gite-media-placeholder gite-interior-placeholder">
-            <span>PHOTO INTÉRIEURE DU GÎTE</span>
+          <div
+            class="gite-interior-carousel"
+            role="region"
+            aria-label="Photos de l’intérieur du gîte"
+            aria-roledescription="carrousel"
+          >
+            <div class="gite-interior-slides">
+              {
+                photosInterieur.map((photo, index) => (
+                  <img
+                    class:list={[
+                      "gite-interior-slide",
+                      { "is-active": index === 0 },
+                    ]}
+                    src={photo}
+                    alt={`Intérieur du gîte LFM Farm - photo ${index + 1}`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    aria-hidden={index === 0 ? "false" : "true"}
+                  />
+                ))
+              }
+            </div>
+
+            <button
+              class="gite-carousel-expand"
+              type="button"
+              aria-label="Agrandir la photo"
+            ></button>
+
+            <button
+              class="gite-carousel-arrow gite-carousel-arrow--previous"
+              type="button"
+              aria-label="Afficher la photo précédente"
+            >
+              <span aria-hidden="true"></span>
+            </button>
+
+            <button
+              class="gite-carousel-arrow gite-carousel-arrow--next"
+              type="button"
+              aria-label="Afficher la photo suivante"
+            >
+              <span aria-hidden="true"></span>
+            </button>
+
+            <div class="gite-carousel-dots" aria-label="Choisir une photo">
+              {
+                photosInterieur.map((_, index) => (
+                  <button
+                    class:list={[
+                      "gite-carousel-dot",
+                      { "is-active": index === 0 },
+                    ]}
+                    type="button"
+                    aria-label={`Afficher la photo ${index + 1}`}
+                    aria-current={index === 0 ? "true" : "false"}
+                    data-slide={index}
+                  ></button>
+                ))
+              }
+            </div>
           </div>
+
+          <dialog class="gite-lightbox" aria-label="Photo agrandie de l’intérieur du gîte">
+            <div class="gite-lightbox-content">
+              <img
+                class="gite-lightbox-image"
+                src={photosInterieur[0]}
+                alt="Intérieur du gîte LFM Farm"
+              />
+
+              <button
+                class="gite-lightbox-close"
+                type="button"
+                aria-label="Fermer la photo agrandie"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+
+              <button
+                class="gite-carousel-arrow gite-lightbox-arrow gite-lightbox-arrow--previous"
+                type="button"
+                aria-label="Afficher la photo précédente"
+              >
+                <span aria-hidden="true"></span>
+              </button>
+
+              <button
+                class="gite-carousel-arrow gite-lightbox-arrow gite-lightbox-arrow--next"
+                type="button"
+                aria-label="Afficher la photo suivante"
+              >
+                <span aria-hidden="true"></span>
+              </button>
+            </div>
+          </dialog>
 
           <img
             class="gite-feature-image"
@@ -94,7 +208,9 @@ const images = {
 
           <div class="gite-feature-stack">
             <article class="gite-feature">
-              <div class="gite-icon" aria-hidden="true">▣</div>
+              <div class="gite-icon" aria-hidden="true">
+                <img src="/icons/lucide--calendar-days.svg" alt="" />
+              </div>
               <h2>Un accueil toute l’année</h2>
               <p>
                 Nous vous accueillons toute l’année, à la nuitée, en week-end ou
@@ -104,7 +220,9 @@ const images = {
             </article>
 
             <article class="gite-feature">
-              <div class="gite-icon gite-icon--horse" aria-hidden="true">♞</div>
+              <div class="gite-icon gite-icon--horse" aria-hidden="true">
+                <img src="/icons/hugeicons--horse-head.svg" alt="" />
+              </div>
               <h2>Un accueil dédié<br />aux cavaliers</h2>
               <p>
                 Pour les cavaliers, foin, granulés, paddocks, douche, boxes et
@@ -121,23 +239,29 @@ const images = {
             loading="lazy"
           />
 
-          <article class="gite-feature gite-feature--location">
-            <div class="gite-icon" aria-hidden="true">⌁</div>
-            <h2>Une situation idéale</h2>
-            <p>
-              Nous sommes situés à 1100 m d’altitude, à 30 min de la station de
-              ski du Mézenc.
-            </p>
-          </article>
-        </div>
+          <div class="gite-feature-stack gite-feature-stack--location">
+            <article class="gite-feature gite-feature--location">
+              <div class="gite-icon" aria-hidden="true">
+                <img src="/icons/lucide--mountain-snow.svg" alt="" />
+              </div>
+              <h2>Une situation idéale</h2>
+              <p>
+                Nous sommes situés à 1100 m d’altitude, à 30 min de la station de
+                ski du Mézenc.
+              </p>
+            </article>
 
-        <aside class="gite-restaurant">
-          <div class="gite-restaurant-icon" aria-hidden="true">♨</div>
-          <p>
-            Un bar restaurant / pizzeria ouvert à l’année se trouve à 5 min en
-            voiture, proposant aussi des plats à emporter ou livrés au gîte.
-          </p>
-        </aside>
+            <aside class="gite-restaurant">
+              <div class="gite-restaurant-icon" aria-hidden="true">
+                <img src="/icons/lucide--utensils.svg" alt="" />
+              </div>
+              <p>
+                Un bar restaurant / pizzeria ouvert à l’année se trouve à 5 min en
+                voiture, proposant aussi des plats à emporter ou livrés au gîte.
+              </p>
+            </aside>
+          </div>
+        </div>
       </section>
 
       <section class="gite-discovery">
@@ -145,7 +269,9 @@ const images = {
 
         <div class="gite-discovery-top">
           <div class="gite-discovery-copy">
-            <div class="gite-icon" aria-hidden="true">⌁</div>
+            <div class="gite-icon" aria-hidden="true">
+              <img src="/icons/lucide--tent.svg" alt="" />
+            </div>
             <p>
               De nombreux chemins de randonnées sont présents autour du village
               (Chemin de Stevenson, Saint-Jacques-de-Compostelle, GR40 et GR18).
@@ -178,5 +304,135 @@ const images = {
     </main>
 
     <Footer />
+
+    <script>
+      const carousel = document.querySelector<HTMLElement>(".gite-interior-carousel");
+      const slides = Array.from(
+        document.querySelectorAll<HTMLImageElement>(".gite-interior-slide")
+      );
+      const dots = Array.from(
+        document.querySelectorAll<HTMLButtonElement>(".gite-carousel-dot")
+      );
+      const previousButton = document.querySelector<HTMLButtonElement>(
+        ".gite-carousel-arrow--previous"
+      );
+      const nextButton = document.querySelector<HTMLButtonElement>(
+        ".gite-carousel-arrow--next"
+      );
+      const expandButton = document.querySelector<HTMLButtonElement>(
+        ".gite-carousel-expand"
+      );
+      const lightbox = document.querySelector<HTMLDialogElement>(".gite-lightbox");
+      const lightboxImage = document.querySelector<HTMLImageElement>(".gite-lightbox-image");
+      const lightboxClose = document.querySelector<HTMLButtonElement>(".gite-lightbox-close");
+      const lightboxPrevious = document.querySelector<HTMLButtonElement>(
+        ".gite-lightbox-arrow--previous"
+      );
+      const lightboxNext = document.querySelector<HTMLButtonElement>(
+        ".gite-lightbox-arrow--next"
+      );
+
+      let currentSlide = 0;
+      let autoplay: number | undefined;
+      let touchStartX = 0;
+
+      const showSlide = (newIndex: number) => {
+        if (slides.length === 0) return;
+
+        currentSlide = (newIndex + slides.length) % slides.length;
+
+        slides.forEach((slide, index) => {
+          const isActive = index === currentSlide;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        dots.forEach((dot, index) => {
+          const isActive = index === currentSlide;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-current", String(isActive));
+        });
+
+        if (lightbox?.open && lightboxImage) {
+          lightboxImage.src = slides[currentSlide].src;
+          lightboxImage.alt = slides[currentSlide].alt;
+        }
+      };
+
+      const stopAutoplay = () => {
+        if (autoplay) window.clearInterval(autoplay);
+        autoplay = undefined;
+      };
+
+      const startAutoplay = () => {
+        stopAutoplay();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        autoplay = window.setInterval(() => showSlide(currentSlide + 1), 4500);
+      };
+
+      previousButton?.addEventListener("click", () => {
+        showSlide(currentSlide - 1);
+        startAutoplay();
+      });
+
+      nextButton?.addEventListener("click", () => {
+        showSlide(currentSlide + 1);
+        startAutoplay();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          showSlide(Number(dot.dataset.slide));
+          startAutoplay();
+        });
+      });
+
+      expandButton?.addEventListener("click", () => {
+        if (!lightbox || !lightboxImage || slides.length === 0) return;
+        stopAutoplay();
+        lightboxImage.src = slides[currentSlide].src;
+        lightboxImage.alt = slides[currentSlide].alt;
+        lightbox.showModal();
+      });
+
+      lightboxClose?.addEventListener("click", () => lightbox?.close());
+      lightboxPrevious?.addEventListener("click", () => showSlide(currentSlide - 1));
+      lightboxNext?.addEventListener("click", () => showSlide(currentSlide + 1));
+
+      lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) lightbox.close();
+      });
+
+      lightbox?.addEventListener("close", startAutoplay);
+
+      document.addEventListener("keydown", (event) => {
+        if (!lightbox?.open) return;
+        if (event.key === "ArrowLeft") showSlide(currentSlide - 1);
+        if (event.key === "ArrowRight") showSlide(currentSlide + 1);
+      });
+
+      carousel?.addEventListener("mouseenter", stopAutoplay);
+      carousel?.addEventListener("mouseleave", startAutoplay);
+      carousel?.addEventListener("focusin", stopAutoplay);
+      carousel?.addEventListener("focusout", startAutoplay);
+      carousel?.addEventListener("touchstart", (event) => {
+        touchStartX = event.touches[0]?.clientX || 0;
+        stopAutoplay();
+      }, { passive: true });
+      carousel?.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0]?.clientX || 0;
+        const distance = touchEndX - touchStartX;
+        if (Math.abs(distance) > 45) {
+          showSlide(currentSlide + (distance < 0 ? 1 : -1));
+        }
+        startAutoplay();
+      }, { passive: true });
+
+      document.addEventListener("visibilitychange", () => {
+        document.hidden ? stopAutoplay() : startAutoplay();
+      });
+
+      startAutoplay();
+    </script>
   </body>
 </html>

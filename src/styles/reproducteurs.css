@@ -36,7 +36,7 @@
   position: absolute;
   z-index: 1;
   top: 50%;
-  left: 5%;
+  left: max(5vw, calc((100vw - 1200px) / 2));
   transform: translateY(-50%);
 
   color: white;
@@ -79,9 +79,9 @@
   position: relative;
   min-height: 440px;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: white;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(54, 24, 12, 0.15);
 }
 
 .breeder-selection-content {
@@ -95,7 +95,7 @@
 .breeder-selection-content h2 {
   margin: 0;
   font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
-  font-size: 28px;
+  font-size: 29px;
   font-weight: 400;
 }
 
@@ -108,27 +108,37 @@
 
 .breeder-selection-content p {
   margin: 0 0 35px;
-  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
-  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
   line-height: 1.25;
 }
 
-.breeder-selection-card > img {
+.breeder-selection-horse {
   position: absolute;
   right: 0;
   bottom: 0;
-
-  width: 52%;
-  height: 92%;
-
   object-fit: contain;
   object-position: right bottom;
+}
+
+.breeder-selection-horse--stallion {
+  right: 3%;
+  width: 50%;
+  height: 100%;
+}
+
+.breeder-selection-horse--mare {
+  right: -5%;
+  width: 58%;
+  height: 108%;
+  transform: scale(1.05);
+  transform-origin: right bottom;
 }
 
 .breeder-selection-button,
 .breeding-season-button {
   display: inline-block;
-  border-radius: 7px;
+  border-radius: 8px;
   background-color: #a83f1d;
   color: white;
   font-family: Arial, sans-serif;
@@ -137,9 +147,9 @@
 }
 
 .breeder-selection-button {
-  padding: 14px 17px;
-  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
-  font-size: 15px;
+  padding: 14px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
 
 .breeding-season-button {
@@ -165,7 +175,7 @@
 }
 
 .marriages-container {
-  width: min(100%, 1100px);
+  width: min(100%, 1200px);
   margin: 0 auto;
   display: grid;
   gap: 45px;
@@ -201,6 +211,10 @@
     object-position: 58% center;
   }
 
+  .breeding-year-hero .breeders-hero-image {
+    object-position: 48% center;
+  }
+
   .breeder-selection,
   .marriages-section {
     padding: 40px 5%;
@@ -215,9 +229,24 @@
     padding: 35px 25px 250px;
   }
 
-  .breeder-selection-card > img {
-    width: 75%;
-    height: 60%;
+  .breeder-selection-content h2 {
+    font-size: 25px;
+  }
+
+  .breeder-selection-content p {
+    font-size: 20px;
+  }
+
+  .breeder-selection-horse--stallion {
+    width: 72%;
+    height: 58%;
+  }
+
+  .breeder-selection-horse--mare {
+    right: -3%;
+    width: 78%;
+    height: 64%;
+    transform: none;
   }
 
   .breeding-season-button {

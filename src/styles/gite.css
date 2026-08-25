@@ -42,23 +42,19 @@
 
 .gite-labels {
   top: 28px;
-  left: 24px;
+  left: max(5vw, calc((100vw - 1200px) / 2));
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
-.gite-label-placeholder {
-  display: grid;
-  width: 58px;
-  height: 70px;
-  place-items: center;
+.gite-label-image {
+  display: block;
+  width: auto;
+  height: 90px;
+  max-width: 120px;
   border: 1px solid rgba(255, 255, 255, 0.65);
   background-color: rgba(255, 255, 255, 0.92);
-  color: var(--gite-accent);
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  text-align: center;
+  object-fit: contain;
 }
 
 .gite-hero-title {
@@ -75,16 +71,15 @@
   font-size: clamp(30px, 4vw, 48px);
   font-weight: 400;
   line-height: 1.04;
-  text-transform: uppercase;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .gite-hero-text {
   bottom: 50px;
-  left: 24px;
+  left: max(5vw, calc((100vw - 1200px) / 2));
   width: min(540px, 48%);
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.45;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
 }
@@ -122,8 +117,8 @@
 .gite-discovery h2 {
   margin: 8px 0 18px;
   color: var(--gite-accent);
-  font-family: Arial, sans-serif;
-  font-size: 17px;
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 29px;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
@@ -133,31 +128,234 @@
 .gite-discovery p,
 .gite-restaurant p {
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.4;
 }
 
 .gite-icon {
-  color: var(--gite-accent);
-  font-family: Georgia, serif;
-  font-size: 55px;
-  line-height: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 54px;
 }
 
-.gite-icon--horse {
-  font-size: 64px;
+.gite-icon img,
+.gite-restaurant-icon img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: invert(25%) sepia(72%) saturate(1641%)
+    hue-rotate(351deg) brightness(83%) contrast(90%);
+}
+
+.gite-icon--horse img {
+  width: 56px;
+  height: 56px;
 }
 
 .gite-feature-image,
 .gite-media-placeholder {
   width: 100%;
-  min-height: 310px;
-  border-radius: 7px;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
 }
 
 .gite-feature-image {
-  height: 310px;
+  height: auto;
   object-fit: cover;
+}
+
+.gite-interior-carousel {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #d7d7d7;
+}
+
+.gite-interior-slides,
+.gite-interior-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.gite-interior-slide {
+  display: block;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity 0.65s ease, transform 1.2s ease;
+}
+
+.gite-interior-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gite-carousel-expand {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.gite-carousel-arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background-color: rgba(40, 35, 31, 0.58);
+  color: white;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.gite-carousel-arrow:hover {
+  background-color: var(--gite-accent);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.gite-carousel-arrow span {
+  width: 11px;
+  height: 11px;
+  border: solid currentColor;
+  border-width: 0 3px 3px 0;
+}
+
+.gite-carousel-arrow--previous {
+  left: 14px;
+}
+
+.gite-carousel-arrow--previous span {
+  transform: translateX(2px) rotate(135deg);
+}
+
+.gite-carousel-arrow--next {
+  right: 14px;
+}
+
+.gite-carousel-arrow--next span {
+  transform: translateX(-2px) rotate(-45deg);
+}
+
+.gite-carousel-dots {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.gite-carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: rgba(40, 35, 31, 0.45);
+  cursor: pointer;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.gite-carousel-dot.is-active {
+  width: 24px;
+  border-radius: 8px;
+  background-color: var(--gite-accent);
+}
+
+.gite-lightbox {
+  width: min(94vw, 1400px);
+  max-width: none;
+  height: min(90vh, 900px);
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: #151412;
+}
+
+.gite-lightbox::backdrop {
+  background-color: rgba(15, 13, 12, 0.88);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.gite-lightbox-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gite-lightbox-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gite-lightbox-close {
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 3px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background-color: rgba(40, 35, 31, 0.72);
+  color: white;
+  font: 34px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.gite-lightbox-close:hover {
+  background-color: var(--gite-accent);
+}
+
+.gite-lightbox-arrow {
+  width: 52px;
+  height: 52px;
+}
+
+.gite-lightbox-arrow--previous {
+  left: 20px;
+}
+
+.gite-lightbox-arrow--previous span {
+  transform: translateX(2px) rotate(135deg);
+}
+
+.gite-lightbox-arrow--next {
+  right: 20px;
+}
+
+.gite-lightbox-arrow--next span {
+  transform: translateX(-2px) rotate(-45deg);
 }
 
 .gite-media-placeholder {
@@ -176,6 +374,11 @@
   gap: 50px;
 }
 
+.gite-feature-stack--location {
+  gap: 24px;
+  justify-content: center;
+}
+
 .gite-restaurant {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -184,18 +387,25 @@
   width: min(100%, 850px);
   margin: 45px auto 0;
   padding: 22px 30px;
-  border-radius: 7px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(54, 24, 12, 0.1);
   background-color: white;
   color: var(--gite-text);
 }
 
+.gite-feature-stack--location .gite-restaurant {
+  width: 100%;
+  margin: 0;
+  padding: 20px 22px;
+}
+
 .gite-restaurant-icon {
-  color: var(--gite-accent);
-  font-size: 50px;
+  display: grid;
+  place-items: center;
 }
 
 .gite-discovery {
-  padding: 65px 5%;
+  padding: 45px 5%;
   background-color: white;
 }
 
@@ -207,24 +417,41 @@
 .gite-discovery-top {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 50px;
+  gap: 36px;
   width: min(100%, 1000px);
-  margin: 40px auto 25px;
+  margin: 25px auto 22px;
+  align-items: center;
 }
 
 .gite-discovery-copy {
+  align-self: center;
   color: var(--gite-text);
 }
 
+.gite-discovery-copy .gite-icon {
+  min-height: 0;
+  margin-bottom: 18px;
+}
+
+.gite-discovery-copy p {
+  margin: 0 0 18px;
+}
+
+.gite-discovery-copy p:last-child {
+  margin-bottom: 0;
+}
+
 .gite-discovery-main {
-  min-height: 300px;
+  width: min(100%, 420px);
+  min-height: 0;
+  justify-self: end;
 }
 
 .gite-gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  width: min(100%, 1000px);
+  width: min(100%, 1200px);
   margin: 0 auto;
 }
 
@@ -243,7 +470,7 @@
   place-items: center;
   align-content: center;
   gap: 20px;
-  border-radius: 7px;
+  border-radius: 8px;
   background-color: #d7d7d7;
   color: #777;
   font-family: Arial, sans-serif;
@@ -254,10 +481,13 @@
 
 .gite-booking-button {
   padding: 13px 24px;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
   background-color: var(--gite-accent);
   color: white;
-  text-decoration: none;
 }
 
 @media (max-width: 760px) {
@@ -285,14 +515,72 @@
     text-align: center;
   }
 
+  .gite-feature h2,
+  .gite-discovery h2 {
+    font-size: 25px;
+  }
+
+  .gite-feature p,
+  .gite-discovery p,
+  .gite-restaurant p {
+    font-size: 20px;
+  }
+
   .gite-feature-image,
   .gite-media-placeholder {
-    height: 280px;
-    min-height: 280px;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  .gite-interior-carousel {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  .gite-carousel-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gite-carousel-arrow--previous {
+    left: 10px;
+  }
+
+  .gite-carousel-arrow--next {
+    right: 10px;
+  }
+
+  .gite-lightbox {
+    width: 96vw;
+    height: 82vh;
+  }
+
+  .gite-lightbox-arrow {
+    width: 44px;
+    height: 44px;
+  }
+
+  .gite-lightbox-arrow--previous {
+    left: 8px;
+  }
+
+  .gite-lightbox-arrow--next {
+    right: 8px;
+  }
+
+  .gite-lightbox-close {
+    top: 10px;
+    right: 10px;
   }
 
   .gite-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .gite-discovery-main {
+    justify-self: center;
   }
 
   .gite-restaurant {

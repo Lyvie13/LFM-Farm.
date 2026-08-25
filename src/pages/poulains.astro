@@ -24,6 +24,20 @@ const poulains = response.items
       (b.fields.ordre || 999)
   );
 
+const sexes = [...new Set(
+  poulains.map((poulain: any) => poulain.fields.sexe).filter(Boolean)
+)].sort((a: any, b: any) => a.localeCompare(b, "fr"));
+
+const statuts = [...new Set(
+  poulains.map((poulain: any) => poulain.fields.statut).filter(Boolean)
+)].sort((a: any, b: any) => a.localeCompare(b, "fr"));
+
+const annees = [...new Set(
+  poulains
+    .map((poulain: any) => poulain.fields.dateNaissance?.slice(0, 4))
+    .filter(Boolean)
+)].sort((a: any, b: any) => Number(b) - Number(a));
+
 const getImageUrl = (url: string | undefined) => {
   if (!url) return "";
   if (url.startsWith("//")) return `https:${url}`;
@@ -51,20 +65,70 @@ const getImageUrl = (url: string | undefined) => {
     <Navbar />
 
     <main>
-      <section class="etalons-heading">
-        <h1>Nos poulains</h1>
+      <section class="horses-hero horses-hero--foals">
+        <img
+          class="horses-hero-image"
+          src="https://res.cloudinary.com/dhmehfgjo/image/upload/v1787666755/poulain_hero.jpg"
+          alt="Un poulain de LFM Farm dans sa prairie"
+        />
 
-        <p>
-          Découvrez les poulains nés à LFM Farm.
-        </p>
+        <div class="horses-hero-overlay"></div>
+
+        <div class="horses-hero-content">
+          <h1>NOS POULAINS</h1>
+          <p>Découvrez les poulains nés à LFM Farm.</p>
+        </div>
       </section>
 
       <section class="etalons-section">
-        <div class="etalons-grid">
+        <div class="foals-filters" aria-label="Filtrer les poulains">
+          <div class="foals-filter-field">
+            <label for="filter-sex">Sexe</label>
+            <select id="filter-sex">
+              <option value="">Tous</option>
+              {sexes.map((sexe: any) => <option value={sexe}>{sexe}</option>)}
+            </select>
+          </div>
+
+          <div class="foals-filter-field">
+            <label for="filter-status">Disponibilité</label>
+            <select id="filter-status">
+              <option value="">Toutes</option>
+              {statuts.map((statut: any) => <option value={statut}>{statut}</option>)}
+            </select>
+          </div>
+
+          <div class="foals-filter-field">
+            <label for="filter-year">Année de naissance</label>
+            <select id="filter-year">
+              <option value="">Toutes</option>
+              {annees.map((annee: any) => <option value={annee}>{annee}</option>)}
+            </select>
+          </div>
+
+          <div class="foals-filter-field">
+            <label for="filter-sort">Trier par</label>
+            <select id="filter-sort">
+              <option value="default">Ordre du site</option>
+              <option value="newest">Plus récents</option>
+              <option value="oldest">Plus anciens</option>
+              <option value="name">Nom</option>
+            </select>
+          </div>
+
+          <button id="reset-filters" class="foals-filters-reset" type="button">
+            Réinitialiser
+          </button>
+        </div>
+
+        <p id="foals-results-count" class="foals-results-count" aria-live="polite"></p>
+
+        <div id="foals-grid" class="etalons-grid">
           {
             poulains.length > 0 ? (
-              poulains.map((poulain: any) => {
+              poulains.map((poulain: any, index: number) => {
                 const fields = poulain.fields;
+                const anneeNaissance = fields.dateNaissance?.slice(0, 4) || "";
 
                 const photo = getImageUrl(
                   fields.photoPrincipale
@@ -72,7 +136,15 @@ const getImageUrl = (url: string | undefined) => {
                 );
 
                 return (
-                  <article class="etalon-card">
+                  <article
+                    class="etalon-card foal-card"
+                    data-sex={fields.sexe || ""}
+                    data-status={fields.statut || ""}
+                    data-year={anneeNaissance}
+                    data-birth-date={fields.dateNaissance || ""}
+                    data-name={fields.nom || ""}
+                    data-index={index}
+                  >
                     {photo && (
                       <img
                         class="etalon-card-image"
@@ -87,13 +159,13 @@ const getImageUrl = (url: string | undefined) => {
 
                       {fields.sexe && (
                         <p class="etalon-card-genotype">
-                          {fields.sexe}
+                          {fields.sexe}{fields.statut && ` · ${fields.statut}`}
                         </p>
                       )}
 
-                      {fields.description && (
+                      {(fields.descriptionCourte || fields.description) && (
                         <p class="etalon-card-description">
-                          {fields.description}
+                          {fields.descriptionCourte || fields.description}
                         </p>
                       )}
 
@@ -115,10 +187,69 @@ const getImageUrl = (url: string | undefined) => {
               </p>
             )
           }
+
+          <p id="foals-no-results" class="etalons-empty foals-no-results" hidden>
+            Aucun poulain ne correspond à ces filtres.
+          </p>
         </div>
       </section>
     </main>
 
     <Footer />
+
+    <script>
+      const sexFilter = document.querySelector("#filter-sex") as HTMLSelectElement;
+      const statusFilter = document.querySelector("#filter-status") as HTMLSelectElement;
+      const yearFilter = document.querySelector("#filter-year") as HTMLSelectElement;
+      const sortFilter = document.querySelector("#filter-sort") as HTMLSelectElement;
+      const resetButton = document.querySelector("#reset-filters") as HTMLButtonElement;
+      const grid = document.querySelector("#foals-grid") as HTMLElement;
+      const cards = Array.from(document.querySelectorAll(".foal-card")) as HTMLElement[];
+      const noResults = document.querySelector("#foals-no-results") as HTMLElement;
+      const resultsCount = document.querySelector("#foals-results-count") as HTMLElement;
+
+      const updateFoals = () => {
+        const visibleCards = cards.filter((card) => {
+          const matchesSex = !sexFilter.value || card.dataset.sex === sexFilter.value;
+          const matchesStatus = !statusFilter.value || card.dataset.status === statusFilter.value;
+          const matchesYear = !yearFilter.value || card.dataset.year === yearFilter.value;
+          const isVisible = matchesSex && matchesStatus && matchesYear;
+          card.hidden = !isVisible;
+          return isVisible;
+        });
+
+        const sortedCards = [...visibleCards].sort((a, b) => {
+          if (sortFilter.value === "newest") {
+            return (b.dataset.birthDate || "").localeCompare(a.dataset.birthDate || "");
+          }
+          if (sortFilter.value === "oldest") {
+            return (a.dataset.birthDate || "").localeCompare(b.dataset.birthDate || "");
+          }
+          if (sortFilter.value === "name") {
+            return (a.dataset.name || "").localeCompare(b.dataset.name || "", "fr");
+          }
+          return Number(a.dataset.index) - Number(b.dataset.index);
+        });
+
+        sortedCards.forEach((card) => grid.appendChild(card));
+        grid.appendChild(noResults);
+        noResults.hidden = visibleCards.length !== 0;
+        resultsCount.textContent = `${visibleCards.length} poulain${visibleCards.length > 1 ? "s" : ""} affiché${visibleCards.length > 1 ? "s" : ""}`;
+      };
+
+      [sexFilter, statusFilter, yearFilter, sortFilter].forEach((filter) => {
+        filter?.addEventListener("change", updateFoals);
+      });
+
+      resetButton?.addEventListener("click", () => {
+        sexFilter.value = "";
+        statusFilter.value = "";
+        yearFilter.value = "";
+        sortFilter.value = "default";
+        updateFoals();
+      });
+
+      updateFoals();
+    </script>
   </body>
 </html>

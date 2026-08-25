@@ -34,6 +34,14 @@ const galerie =
   fields.galeriePhotos ||
   [];
 
+const photosGalerie = galerie
+  .map((photo: any) => getImageUrl(photo))
+  .filter(Boolean);
+
+const toutesPhotos = [...new Set(
+  [photoPrincipale, ...photosGalerie].filter(Boolean)
+)];
+
 /* =========================
    INFORMATIONS GÉNÉRALES
 ========================= */
@@ -72,8 +80,26 @@ const getNomParent = (parent: any) => {
   return "";
 };
 
+const getLienParent = (parent: any) => {
+  const slug = parent?.fields?.slug;
+  const contentType = parent?.sys?.contentType?.sys?.id;
+
+  if (!slug || !contentType) return "";
+
+  const chemins: Record<string, string> = {
+    etalons: "etalons",
+    poulinieres: "poulinieres",
+    poulains: "poulains",
+  };
+
+  const chemin = chemins[contentType];
+  return chemin ? `/${chemin}/${slug}` : "";
+};
+
 const pere = getNomParent(fields.pere);
 const mere = getNomParent(fields.mere);
+const lienPere = getLienParent(fields.pere);
+const lienMere = getLienParent(fields.mere);
 
 /* =========================
    DATE DE NAISSANCE
@@ -112,27 +138,49 @@ const texteNaissance =
     ========================== -->
 
     <div class="horse-gallery">
-      {
-        photoPrincipale ? (
-          <img
-            id="horse-main-image"
-            class="horse-main-image"
-            src={photoPrincipale}
-            alt={`${typeCheval} ${fields.nom || ""}`}
-          />
-        ) : (
-          <div class="horse-no-image">
-            Aucune photo disponible
-          </div>
-        )
-      }
+      <div class="horse-main-image-wrapper">
+        {
+          photoPrincipale ? (
+            <img
+              id="horse-main-image"
+              class="horse-main-image"
+              src={photoPrincipale}
+              alt={`${typeCheval} ${fields.nom || ""}`}
+            />
+          ) : (
+            <div class="horse-no-image">
+              Aucune photo disponible
+            </div>
+          )
+        }
+
+        {
+          toutesPhotos.length > 1 && (
+            <>
+              <button
+                class="horse-gallery-arrow horse-gallery-arrow--previous"
+                type="button"
+                aria-label="Afficher la photo précédente"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+
+              <button
+                class="horse-gallery-arrow horse-gallery-arrow--next"
+                type="button"
+                aria-label="Afficher la photo suivante"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
+            </>
+          )
+        }
+      </div>
 
       {
         galerie.length > 0 && (
           <div class="horse-thumbnails">
-            {galerie.map((photo: any) => {
-              const photoUrl = getImageUrl(photo);
-
+            {photosGalerie.map((photoUrl: string) => {
               return (
                 photoUrl && (
                   <button
@@ -207,7 +255,13 @@ const texteNaissance =
               pere && (
                 <p>
                   <strong>Père :</strong>{" "}
-                  {pere}
+                  {
+                    lienPere ? (
+                      <a href={lienPere}>{pere}</a>
+                    ) : (
+                      pere
+                    )
+                  }
                 </p>
               )
             }
@@ -216,7 +270,13 @@ const texteNaissance =
               mere && (
                 <p>
                   <strong>Mère :</strong>{" "}
-                  {mere}
+                  {
+                    lienMere ? (
+                      <a href={lienMere}>{mere}</a>
+                    ) : (
+                      mere
+                    )
+                  }
                 </p>
               )
             }
@@ -314,14 +374,58 @@ const texteNaissance =
       ".horse-thumbnail-button"
     );
 
+  const boutonPrecedent =
+    document.querySelector<HTMLButtonElement>(
+      ".horse-gallery-arrow--previous"
+    );
+
+  const boutonSuivant =
+    document.querySelector<HTMLButtonElement>(
+      ".horse-gallery-arrow--next"
+    );
+
+  const photos = imagePrincipale
+    ? [
+        imagePrincipale.src,
+        ...Array.from(miniatures)
+          .map((miniature) => miniature.dataset.image)
+          .filter((url): url is string => Boolean(url)),
+      ].filter((url, index, liste) => liste.indexOf(url) === index)
+    : [];
+
+  let indexPhoto = 0;
+
+  const afficherPhoto = (nouvelIndex: number) => {
+    if (!imagePrincipale || photos.length === 0) return;
+
+    indexPhoto = (nouvelIndex + photos.length) % photos.length;
+    imagePrincipale.src = photos[indexPhoto];
+
+    miniatures.forEach((miniature) => {
+      miniature.classList.toggle(
+        "is-active",
+        miniature.dataset.image === photos[indexPhoto]
+      );
+    });
+  };
+
   miniatures.forEach((miniature) => {
     miniature.addEventListener("click", () => {
       const nouvelleImage =
         miniature.dataset.image;
 
       if (imagePrincipale && nouvelleImage) {
-        imagePrincipale.src = nouvelleImage;
+        const nouvelIndex = photos.indexOf(nouvelleImage);
+        afficherPhoto(nouvelIndex >= 0 ? nouvelIndex : 0);
       }
     });
+  });
+
+  boutonPrecedent?.addEventListener("click", () => {
+    afficherPhoto(indexPhoto - 1);
+  });
+
+  boutonSuivant?.addEventListener("click", () => {
+    afficherPhoto(indexPhoto + 1);
   });
 </script>

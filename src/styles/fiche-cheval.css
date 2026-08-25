@@ -18,10 +18,15 @@
   overflow: hidden;
   border-radius: 8px;
   background-color: #f8eadb;
+  box-shadow: 0 4px 12px rgba(54, 24, 12, 0.12);
 }
 
 .horse-gallery {
   background-color: white;
+}
+
+.horse-main-image-wrapper {
+  position: relative;
 }
 
 .horse-main-image {
@@ -36,6 +41,56 @@
   height: 570px;
   place-items: center;
   color: #777;
+}
+
+.horse-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  background-color: rgba(40, 35, 31, 0.58);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.horse-gallery-arrow:hover {
+  background-color: #a83f1d;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.horse-gallery-arrow span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: solid currentColor;
+  border-width: 0 3px 3px 0;
+  font-size: 0;
+}
+
+.horse-gallery-arrow--previous {
+  left: 16px;
+}
+
+.horse-gallery-arrow--previous span {
+  transform: translateX(2px) rotate(135deg);
+}
+
+.horse-gallery-arrow--next {
+  right: 16px;
+}
+
+.horse-gallery-arrow--next span {
+  transform: translateX(-2px) rotate(-45deg);
 }
 
 .horse-thumbnails {
@@ -63,6 +118,11 @@
 
 .horse-thumbnail-button:hover img {
   opacity: 0.75;
+}
+
+.horse-thumbnail-button.is-active {
+  outline: 3px solid #a83f1d;
+  outline-offset: -3px;
 }
 
 .horse-information {
@@ -107,6 +167,17 @@
   margin: 5px 0;
 }
 
+.horse-parents a {
+  color: #a83f1d;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.horse-parents a:hover {
+  color: #76280f;
+}
+
 .horse-extra {
   margin-top: 25px;
 }
@@ -135,7 +206,7 @@
   display: inline-block;
   margin-top: 25px;
   padding: 15px 27px;
-  border-radius: 7px;
+  border-radius: 8px;
   background-color: #a83f1d;
   color: white;
   font-family: Arial, sans-serif;
@@ -159,6 +230,20 @@
 }
 
 @media (max-width: 560px) {
+  .horse-gallery-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 32px;
+  }
+
+  .horse-gallery-arrow--previous {
+    left: 10px;
+  }
+
+  .horse-gallery-arrow--next {
+    right: 10px;
+  }
+
   .horse-back,
   .horse-detail {
     width: calc(100% - 24px);

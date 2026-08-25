@@ -4,10 +4,22 @@
   box-sizing: border-box;
 }
 
+:root {
+  --site-accent: #a83f1d;
+  --site-accent-dark: #7f2c11;
+  --site-cream: #f8eadb;
+  --site-paper: #fff8ef;
+  --site-text: #28231f;
+  --site-title-font: Baskerville, "Baskerville Old Face", Georgia, serif;
+  --site-text-font: Arial, Helvetica, sans-serif;
+  --site-radius: 8px;
+  --site-shadow: 0 4px 12px rgba(54, 24, 12, 0.15);
+}
+
 body {
   margin: 0;
   min-width: 320px;
-  font-family: Inter, Arial, sans-serif;
+  font-family: var(--site-text-font);
   background-color: #fff8ef;
   color: #7c2d12;
   overflow-x: hidden;
@@ -80,7 +92,7 @@ a {
 
 .site-header nav a {
   color: #a83f1d;
-  font-family: Inter, sans-serif;
+  font-family: var(--site-text-font);
   font-size: 18px;
   font-weight: 700;
   text-decoration: none;
@@ -89,6 +101,75 @@ a {
 
 .site-header nav a:hover {
   color: #76280f;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-heading {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #a83f1d;
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.nav-submenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  display: none;
+  min-width: 170px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #fffaf4;
+  box-shadow: 0 8px 22px rgba(54, 24, 12, 0.18);
+  transform: translateX(-50%);
+}
+
+.nav-submenu::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: 12px;
+}
+
+.site-header nav .nav-submenu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.site-header nav .nav-submenu a:hover {
+  background-color: #f8eadb;
+}
+
+.nav-dropdown:hover .nav-submenu,
+.nav-dropdown:focus-within .nav-submenu,
+.nav-dropdown.submenu-open .nav-submenu {
+  display: block;
+}
+
+.nav-dropdown.submenu-open .nav-dropdown-toggle {
+  transform: rotate(180deg);
 }
 
 
@@ -100,18 +181,23 @@ a {
 .contact-button {
   justify-self: end;
   padding: 15px 27px;
-  border-radius: 10px;
+  border-radius: var(--site-radius);
   background-color: #a83f1d;
   color: white;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
+  line-height: 1;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .contact-button:hover {
   background-color: #7f2c11;
+}
+
+.mobile-contact-link {
+  display: none;
 }
 
 
@@ -122,12 +208,13 @@ Autres boutons
 .primary-button {
   justify-self: end;
   padding: 15px 27px;
-  border-radius: 10px;
+  border-radius: var(--site-radius);
   background-color: #a83f1d;
   color: white;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
+  line-height: 1;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -194,6 +281,53 @@ Autres boutons
     padding: 12px 4px;
     font-size: 16px;
     border-bottom: 1px solid rgba(168, 63, 29, 0.1);
+  }
+
+  .site-header.menu-open .nav-dropdown-heading {
+    border-bottom: 1px solid rgba(168, 63, 29, 0.1);
+  }
+
+  .site-header.menu-open .nav-dropdown-heading > a {
+    flex: 1;
+    border-bottom: 0;
+  }
+
+  .site-header.menu-open .nav-dropdown-toggle {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .site-header.menu-open .nav-submenu {
+    position: static;
+    min-width: 0;
+    padding: 0 0 4px 18px;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .site-header.menu-open .nav-submenu a {
+    padding: 11px 4px;
+    font-size: 15px;
+  }
+
+  .site-header.menu-open .main-navigation .mobile-contact-link {
+    display: block;
+    margin-top: 12px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: var(--site-radius);
+    background-color: #a83f1d;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .site-header.menu-open .main-navigation .mobile-contact-link:hover {
+    background-color: #7f2c11;
+    color: #fff;
   }
 
   .site-header.menu-open .menu-toggle span:nth-child(1) {

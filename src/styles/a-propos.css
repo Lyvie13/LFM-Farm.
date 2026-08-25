@@ -66,7 +66,7 @@
 ========================= */
 
 .about-content {
-  width: min(100% - 48px, 1100px);
+  width: min(90%, 1200px);
   margin: 0 auto;
   padding: 42px 0 55px;
 }
@@ -84,6 +84,21 @@
 
 .about-grid--gite {
   grid-template-columns: 1.05fr 0.95fr;
+  align-items: stretch;
+}
+
+.about-grid--gite .about-image {
+  height: 100%;
+  min-height: 520px;
+  object-position: 65% center;
+}
+
+.about-grid--gite .about-copy li + li {
+  margin-top: 9px;
+}
+
+.about-grid--gite .about-button {
+  margin-top: 18px;
 }
 
 .about-section,
@@ -136,7 +151,7 @@
   display: block;
   width: 100%;
   height: clamp(300px, 32vw, 390px);
-  border-radius: 7px;
+  border-radius: 8px;
   object-fit: cover;
   object-position: center;
 }
@@ -149,7 +164,7 @@
   display: inline-block;
   margin-top: 25px;
   padding: 14px 20px;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: var(--about-accent);
   color: white;
   font-family: Arial, sans-serif;
@@ -198,7 +213,7 @@
   }
 
   .about-content {
-    width: min(100% - 36px, 1100px);
+    width: 90%;
     padding: 34px 0 45px;
   }
 
@@ -220,6 +235,11 @@
   .about-image,
   .about-image--portrait {
     height: 310px;
+  }
+
+  .about-grid--gite .about-image {
+    height: 310px;
+    min-height: 0;
   }
 
   .about-section,

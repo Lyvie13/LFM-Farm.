@@ -22,11 +22,30 @@
   <nav id="main-navigation" class="main-navigation" aria-label="Navigation principale">
     <a href="/">Accueil</a>
     <a href="/a-propos">À propos</a>
-    <a href="/reproducteurs">Reproducteurs</a>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">
+        <a href="/reproducteurs">Reproducteurs</a>
+        <button
+          class="nav-dropdown-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="reproducteurs-submenu"
+          aria-label="Afficher les catégories de reproducteurs"
+        >
+          <span aria-hidden="true">⌄</span>
+        </button>
+      </div>
+
+      <div id="reproducteurs-submenu" class="nav-submenu">
+        <a href="/etalons">Étalons</a>
+        <a href="/poulinieres">Poulinières</a>
+      </div>
+    </div>
     <a href="/poulains">Poulains</a>
     <a href="/mariage">Mariage pour 2027</a>
     <a href="/gite">Gîte</a>
     <a href="https://blagapro.com/categorie-produit/boutiques-entreprises/lfm-farm-43150/" target="_blank" rel="noopener noreferrer">Boutique</a>
+    <a class="mobile-contact-link" href="/contact">Nous contacter</a>
   </nav>
 
   <a class="contact-button" href="/contact">NOUS CONTACTER</a>
@@ -35,18 +54,27 @@
 <script>
   const header = document.querySelector(".site-header");
   const menuButton = document.querySelector(".menu-toggle") as HTMLButtonElement;
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".nav-dropdown-toggle") as HTMLButtonElement;
   const menuLinks = document.querySelectorAll(".main-navigation a");
 
   const closeMenu = () => {
     header?.classList.remove("menu-open");
     menuButton?.setAttribute("aria-expanded", "false");
     menuButton?.setAttribute("aria-label", "Ouvrir le menu");
+    dropdown?.classList.remove("submenu-open");
+    dropdownButton?.setAttribute("aria-expanded", "false");
   };
 
   menuButton?.addEventListener("click", () => {
     const isOpen = header?.classList.toggle("menu-open") ?? false;
     menuButton.setAttribute("aria-expanded", String(isOpen));
     menuButton.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+  });
+
+  dropdownButton?.addEventListener("click", () => {
+    const isOpen = dropdown?.classList.toggle("submenu-open") ?? false;
+    dropdownButton.setAttribute("aria-expanded", String(isOpen));
   });
 
   menuLinks.forEach((link) => link.addEventListener("click", closeMenu));

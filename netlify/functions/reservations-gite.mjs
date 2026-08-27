@@ -90,6 +90,107 @@ const publicPeriods = async () => {
 const cleanText = (value, maxLength) =>
   typeof value === "string" ? value.trim().replace(/[<>]/g, "").slice(0, maxLength) : "";
 
+const escapeHtml = (value) =>
+  String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+const formatDate = (value) =>
+  new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/Paris",
+  }).format(new Date(`${value}T12:00:00Z`));
+
+const sendReservationNotification = async ({
+  entryId,
+  dateArrivee,
+  dateDepart,
+  nights,
+  prenom,
+  nomClient,
+  email,
+  telephone,
+  nombreAdultes,
+  nombreEnfants,
+  nombreChevaux,
+  message,
+}) => {
+  const apiKey = env("RESEND_API_KEY");
+  const ownerEmail = env("RESERVATION_OWNER_EMAIL");
+  const fromEmail = env("RESERVATION_FROM_EMAIL");
+  const contactName = `${prenom} ${nomClient}`;
+  const arrival = formatDate(dateArrivee);
+  const departure = formatDate(dateDepart);
+  const text = [
+    "Nouvelle demande de réservation du gîte LFM Farm",
+    "",
+    `Séjour : du ${arrival} au ${departure} (${nights} nuit${nights > 1 ? "s" : ""})`,
+    `Client : ${contactName}`,
+    `E-mail : ${email}`,
+    `Téléphone : ${telephone || "Non renseigné"}`,
+    `Adultes : ${nombreAdultes}`,
+    `Enfants : ${nombreEnfants}`,
+    `Chevaux : ${nombreChevaux}`,
+    "",
+    "Message :",
+    message || "Aucun message.",
+    "",
+    "La demande a aussi été enregistrée dans Contentful avec le statut « Demande reçue ».",
+  ].join("\n");
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#2b211c;line-height:1.55;max-width:640px">
+      <h1 style="color:#b43f1b;font-family:Georgia,serif;font-size:26px">Nouvelle demande de réservation</h1>
+      <p><strong>Séjour :</strong> du ${escapeHtml(arrival)} au ${escapeHtml(departure)} (${nights} nuit${nights > 1 ? "s" : ""})</p>
+      <p>
+        <strong>Client :</strong> ${escapeHtml(contactName)}<br>
+        <strong>E-mail :</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a><br>
+        <strong>Téléphone :</strong> ${escapeHtml(telephone || "Non renseigné")}
+      </p>
+      <p>
+        <strong>Adultes :</strong> ${nombreAdultes}<br>
+        <strong>Enfants :</strong> ${nombreEnfants}<br>
+        <strong>Chevaux :</strong> ${nombreChevaux}
+      </p>
+      <p><strong>Message :</strong><br>${escapeHtml(message || "Aucun message.").replaceAll("\n", "<br>")}</p>
+      <p style="padding:12px 16px;background:#fbefe3;border-left:4px solid #b43f1b">
+        La demande a aussi été enregistrée dans Contentful avec le statut « Demande reçue ».
+      </p>
+    </div>
+  `;
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "User-Agent": "LFM-Farm-Netlify/1.0",
+      "Idempotency-Key": `reservation-${entryId}`,
+    },
+    body: JSON.stringify({
+      from: fromEmail,
+      to: [ownerEmail],
+      reply_to: email,
+      subject: `Demande gîte — ${contactName} — ${dateArrivee}`,
+      text,
+      html,
+    }),
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    console.error("Resend", response.status, details);
+    return false;
+  }
+
+  return true;
+};
+
 const integer = (value, minimum, maximum, fallback = 0) => {
   const parsed = Number.parseInt(String(value), 10);
   return Number.isInteger(parsed) && parsed >= minimum && parsed <= maximum ? parsed : fallback;
@@ -111,6 +212,9 @@ const createReservation = async (body) => {
   const email = cleanText(body.email, 160).toLowerCase();
   const telephone = cleanText(body.telephone, 30);
   const message = cleanText(body.message, 2000);
+  const nombreAdultes = integer(body.nombreAdultes, 1, 10, 1);
+  const nombreEnfants = integer(body.nombreEnfants, 0, 10, 0);
+  const nombreChevaux = integer(body.nombreChevaux, 0, 10, 0);
 
   if (!isValidDateKey(dateArrivee) || !isValidDateKey(dateDepart) || dateDepart <= dateArrivee) {
     throw Object.assign(new Error("Choisissez une date d’arrivée et une date de départ valides."), { status: 400 });
@@ -144,9 +248,9 @@ const createReservation = async (body) => {
     prenom: field(prenom),
     nomClient: field(nomClient),
     email: field(email),
-    nombreAdultes: field(integer(body.nombreAdultes, 1, 10, 1)),
-    nombreEnfants: field(integer(body.nombreEnfants, 0, 10, 0)),
-    nombreChevaux: field(integer(body.nombreChevaux, 0, 10, 0)),
+    nombreAdultes: field(nombreAdultes),
+    nombreEnfants: field(nombreEnfants),
+    nombreChevaux: field(nombreChevaux),
     consentement: field(true),
     rappelEnvoye: field(false),
   };
@@ -160,7 +264,27 @@ const createReservation = async (body) => {
     body: JSON.stringify({ fields }),
   });
 
-  return { id: entry.sys.id };
+  let emailSent = false;
+  try {
+    emailSent = await sendReservationNotification({
+      entryId: entry.sys.id,
+      dateArrivee,
+      dateDepart,
+      nights,
+      prenom,
+      nomClient,
+      email,
+      telephone,
+      nombreAdultes,
+      nombreEnfants,
+      nombreChevaux,
+      message,
+    });
+  } catch (error) {
+    console.error("Notification Resend", error);
+  }
+
+  return { id: entry.sys.id, emailSent };
 };
 
 export default async (request) => {

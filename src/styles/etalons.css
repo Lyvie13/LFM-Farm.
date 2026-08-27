@@ -120,15 +120,23 @@
   font-weight: 700;
 }
 
-.foals-filter-field select {
+.foals-filter-field select,
+.foals-filter-field input {
   width: 100%;
   min-height: 44px;
-  padding: 0 34px 0 12px;
   border: 1px solid rgba(168, 63, 29, 0.35);
   border-radius: 6px;
   background-color: #fffaf4;
   color: #28231f;
   font: 15px Arial, sans-serif;
+}
+
+.foals-filter-field select {
+  padding: 0 34px 0 12px;
+}
+
+.foals-filter-field input {
+  padding: 0 12px;
 }
 
 .foals-filters-reset {

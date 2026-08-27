@@ -67,10 +67,28 @@ const getImageUrl = (url: string | undefined) => {
       </section>
 
       <section class="etalons-section">
-        <div class="etalons-grid">
+        <div class="foals-filters" aria-label="Filtrer les poulinières">
+          <div class="foals-filter-field">
+            <label for="mare-filter-name">Rechercher par nom</label>
+            <input
+              id="mare-filter-name"
+              type="search"
+              placeholder="Nom de la poulinière"
+              autocomplete="off"
+            />
+          </div>
+
+          <button id="mare-reset-filters" class="foals-filters-reset" type="button">
+            Réinitialiser
+          </button>
+        </div>
+
+        <p id="mares-results-count" class="foals-results-count" aria-live="polite"></p>
+
+        <div id="mares-grid" class="etalons-grid">
           {
             poulinieres.length > 0 ? (
-              poulinieres.map((pouliniere: any) => {
+              poulinieres.map((pouliniere: any, index: number) => {
                 const fields = pouliniere.fields;
 
                 const photo = getImageUrl(
@@ -79,7 +97,11 @@ const getImageUrl = (url: string | undefined) => {
                 );
 
                 return (
-                  <article class="etalon-card">
+                  <article
+                    class="etalon-card mare-card"
+                    data-name={fields.nom || ""}
+                    data-index={index}
+                  >
                     {photo && (
                       <img
                         class="etalon-card-image"
@@ -122,10 +144,56 @@ const getImageUrl = (url: string | undefined) => {
               </p>
             )
           }
+
+          <p id="mares-no-results" class="etalons-empty foals-no-results" hidden>
+            Aucune poulinière ne correspond à ces filtres.
+          </p>
         </div>
       </section>
     </main>
 
     <Footer />
+
+    <script>
+      const nameFilter = document.querySelector("#mare-filter-name") as HTMLInputElement;
+      const resetButton = document.querySelector("#mare-reset-filters") as HTMLButtonElement;
+      const grid = document.querySelector("#mares-grid") as HTMLElement;
+      const cards = Array.from(document.querySelectorAll(".mare-card")) as HTMLElement[];
+      const noResults = document.querySelector("#mares-no-results") as HTMLElement;
+      const resultsCount = document.querySelector("#mares-results-count") as HTMLElement;
+
+      const normalize = (value: string) => value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("fr");
+
+      const updateMares = () => {
+        const searchedName = normalize(nameFilter.value.trim());
+        const visibleCards = cards.filter((card) => {
+          const isVisible = !searchedName || normalize(card.dataset.name || "").includes(searchedName);
+          card.hidden = !isVisible;
+          return isVisible;
+        });
+
+        const sortedCards = [...visibleCards].sort(
+          (a, b) => Number(a.dataset.index) - Number(b.dataset.index)
+        );
+
+        sortedCards.forEach((card) => grid.appendChild(card));
+        grid.appendChild(noResults);
+        noResults.hidden = visibleCards.length !== 0;
+        resultsCount.textContent = `${visibleCards.length} poulinière${visibleCards.length > 1 ? "s" : ""} affichée${visibleCards.length > 1 ? "s" : ""}`;
+      };
+
+      nameFilter?.addEventListener("input", updateMares);
+
+      resetButton?.addEventListener("click", () => {
+        nameFilter.value = "";
+        updateMares();
+        nameFilter.focus();
+      });
+
+      updateMares();
+    </script>
   </body>
 </html>

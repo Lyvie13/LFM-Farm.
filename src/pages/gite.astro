@@ -296,9 +296,103 @@ const photosInterieur = [
       </section>
 
       <section class="gite-booking">
-        <div class="gite-booking-placeholder">
-          <p>EMPLACEMENT DU MODULE DE RÉSERVATION</p>
-          <a class="gite-booking-button" href="/contact">Nous contacter</a>
+        <div class="gite-booking-container">
+          <header class="gite-booking-heading">
+            <p class="gite-booking-kicker">Préparer votre séjour</p>
+            <h2>Consultez les disponibilités du gîte</h2>
+            <p>
+              Choisissez vos dates puis envoyez votre demande. Elle ne devient
+              définitive qu’après confirmation de LFM Farm et réception de
+              l’acompte.
+            </p>
+          </header>
+
+          <div class="reservation-calendar" data-reservation-calendar>
+            <div class="reservation-calendar-toolbar">
+              <button type="button" class="reservation-calendar-nav reservation-calendar-nav--previous" data-calendar-previous aria-label="Afficher les mois précédents"><span aria-hidden="true"></span></button>
+              <p data-calendar-title aria-live="polite">Chargement des disponibilités…</p>
+              <button type="button" class="reservation-calendar-nav reservation-calendar-nav--next" data-calendar-next aria-label="Afficher les mois suivants"><span aria-hidden="true"></span></button>
+            </div>
+
+            <div class="reservation-months" data-calendar-months aria-label="Calendrier des disponibilités"></div>
+
+            <div class="reservation-calendar-legend" aria-label="Légende du calendrier">
+              <span><i class="is-available"></i>Disponible</span>
+              <span><i class="is-requested"></i>Demande en cours</span>
+              <span><i class="is-unavailable"></i>Indisponible</span>
+            </div>
+
+            <p class="reservation-calendar-status" data-calendar-status aria-live="polite"></p>
+          </div>
+
+          <form class="reservation-form" data-reservation-form>
+            <div class="reservation-form-heading">
+              <h3>Demander ces dates</h3>
+              <p>Votre demande sera étudiée personnellement par LFM Farm.</p>
+            </div>
+
+            <input class="botcheck" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <div class="reservation-form-grid">
+              <label>
+                <span>Date d’arrivée *</span>
+                <input type="date" name="dateArrivee" required data-arrival />
+              </label>
+              <label>
+                <span>Date de départ *</span>
+                <input type="date" name="dateDepart" required data-departure />
+              </label>
+              <label>
+                <span>Prénom *</span>
+                <input type="text" name="prenom" autocomplete="given-name" maxlength="80" required />
+              </label>
+              <label>
+                <span>Nom *</span>
+                <input type="text" name="nomClient" autocomplete="family-name" maxlength="80" required />
+              </label>
+              <label>
+                <span>Adresse e-mail *</span>
+                <input type="email" name="email" autocomplete="email" maxlength="160" required />
+              </label>
+              <label>
+                <span>Téléphone</span>
+                <input type="tel" name="telephone" autocomplete="tel" maxlength="30" />
+              </label>
+              <label>
+                <span>Nombre d’adultes *</span>
+                <input type="number" name="nombreAdultes" min="1" max="10" value="1" required />
+              </label>
+              <label>
+                <span>Nombre d’enfants</span>
+                <input type="number" name="nombreEnfants" min="0" max="10" value="0" />
+              </label>
+              <label>
+                <span>Nombre de chevaux</span>
+                <input type="number" name="nombreChevaux" min="0" max="10" value="0" />
+              </label>
+              <label class="reservation-form-message">
+                <span>Votre message</span>
+                <textarea name="message" rows="5" maxlength="2000" placeholder="Précisez vos besoins ou posez-nous vos questions."></textarea>
+              </label>
+            </div>
+
+            <label class="reservation-form-consent">
+              <input type="checkbox" name="consentement" required />
+              <span>
+                J’accepte que mes informations soient utilisées pour traiter ma
+                demande conformément à la <a href="/politique-de-confidentialite" target="_blank">politique de confidentialité</a>.
+              </span>
+            </label>
+
+            <p class="reservation-form-notice">
+              L’envoi de ce formulaire ne confirme pas la réservation. Les dates
+              seront bloquées après acceptation de la demande, puis confirmées à
+              la réception de l’acompte.
+            </p>
+
+            <button class="gite-booking-button" type="submit">Envoyer ma demande</button>
+            <p class="reservation-form-result" data-reservation-result aria-live="polite"></p>
+          </form>
         </div>
       </section>
     </main>
@@ -433,6 +527,213 @@ const photosInterieur = [
       });
 
       startAutoplay();
+
+      /* Calendrier et demande de réservation du gîte */
+      const bookingRoot = document.querySelector<HTMLElement>("[data-reservation-calendar]");
+      const monthsRoot = document.querySelector<HTMLElement>("[data-calendar-months]");
+      const calendarTitle = document.querySelector<HTMLElement>("[data-calendar-title]");
+      const calendarStatus = document.querySelector<HTMLElement>("[data-calendar-status]");
+      const previousMonths = document.querySelector<HTMLButtonElement>("[data-calendar-previous]");
+      const nextMonths = document.querySelector<HTMLButtonElement>("[data-calendar-next]");
+      const reservationForm = document.querySelector<HTMLFormElement>("[data-reservation-form]");
+      const reservationResult = document.querySelector<HTMLElement>("[data-reservation-result]");
+      const arrivalInput = document.querySelector<HTMLInputElement>("[data-arrival]");
+      const departureInput = document.querySelector<HTMLInputElement>("[data-departure]");
+
+      type ReservationPeriod = {
+        start: string;
+        end: string;
+        status: "demandeRecue" | "attenteAcompte" | "confirmee" | "indisponible";
+      };
+
+      const monthNames = [
+        "janvier", "février", "mars", "avril", "mai", "juin",
+        "juillet", "août", "septembre", "octobre", "novembre", "décembre",
+      ];
+      const dayNames = ["L", "M", "M", "J", "V", "S", "D"];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      let reservationPeriods: ReservationPeriod[] = [];
+      const mobileCalendarQuery = window.matchMedia("(max-width: 760px)");
+
+      const toDateKey = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
+
+      const dateFromKey = (value: string) => {
+        const [year, month, day] = value.split("-").map(Number);
+        return new Date(year, month - 1, day);
+      };
+
+      const statusForDate = (dateKey: string) => {
+        const matching = reservationPeriods.filter(
+          (period) => dateKey >= period.start && dateKey < period.end
+        );
+        if (matching.some((period) => ["attenteAcompte", "confirmee", "indisponible"].includes(period.status))) return "unavailable";
+        if (matching.some((period) => period.status === "demandeRecue")) return "requested";
+        return "available";
+      };
+
+      const renderCalendar = () => {
+        if (!monthsRoot || !calendarTitle) return;
+        monthsRoot.innerHTML = "";
+
+        const lastVisibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+        calendarTitle.textContent = mobileCalendarQuery.matches
+          ? `${monthNames[visibleMonth.getMonth()]} ${visibleMonth.getFullYear()}`
+          : `${monthNames[visibleMonth.getMonth()]} ${visibleMonth.getFullYear()} — ${monthNames[lastVisibleMonth.getMonth()]} ${lastVisibleMonth.getFullYear()}`;
+
+        [visibleMonth, lastVisibleMonth].forEach((monthDate) => {
+          const month = document.createElement("section");
+          month.className = "reservation-month";
+          const heading = document.createElement("h3");
+          heading.textContent = `${monthNames[monthDate.getMonth()]} ${monthDate.getFullYear()}`;
+          month.append(heading);
+
+          const weekdays = document.createElement("div");
+          weekdays.className = "reservation-weekdays";
+          dayNames.forEach((day) => {
+            const label = document.createElement("span");
+            label.textContent = day;
+            weekdays.append(label);
+          });
+          month.append(weekdays);
+
+          const days = document.createElement("div");
+          days.className = "reservation-days";
+          const firstDay = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
+          const offset = (firstDay.getDay() + 6) % 7;
+          const numberOfDays = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
+
+          for (let index = 0; index < offset; index += 1) {
+            const empty = document.createElement("span");
+            empty.className = "reservation-day is-empty";
+            days.append(empty);
+          }
+
+          for (let dayNumber = 1; dayNumber <= numberOfDays; dayNumber += 1) {
+            const date = new Date(monthDate.getFullYear(), monthDate.getMonth(), dayNumber);
+            const dateKey = toDateKey(date);
+            const status = statusForDate(dateKey);
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = `reservation-day is-${status}`;
+            button.textContent = String(dayNumber);
+            button.dataset.date = dateKey;
+            button.setAttribute("aria-label", `${dayNumber} ${monthNames[monthDate.getMonth()]} ${monthDate.getFullYear()} — ${status === "available" ? "disponible" : "indisponibilité possible"}`);
+
+            if (date < today || ["held", "unavailable"].includes(status)) {
+              button.disabled = true;
+            }
+
+            const arrival = arrivalInput?.value;
+            const departure = departureInput?.value;
+            if (dateKey === arrival) button.classList.add("is-selection-start");
+            if (dateKey === departure) button.classList.add("is-selection-end");
+            if (arrival && departure && dateKey > arrival && dateKey < departure) {
+              button.classList.add("is-selection-range");
+            }
+
+            button.addEventListener("click", () => {
+              if (!arrivalInput || !departureInput) return;
+              if (!arrivalInput.value || departureInput.value) {
+                arrivalInput.value = dateKey;
+                departureInput.value = "";
+              } else if (dateKey > arrivalInput.value) {
+                departureInput.value = dateKey;
+              } else {
+                arrivalInput.value = dateKey;
+                departureInput.value = "";
+              }
+              renderCalendar();
+            });
+            days.append(button);
+          }
+          month.append(days);
+          monthsRoot.append(month);
+        });
+      };
+
+      const loadAvailability = async () => {
+        if (!calendarStatus) return;
+        calendarStatus.textContent = "Chargement des disponibilités…";
+        try {
+          const response = await fetch("/api/reservations-gite", { headers: { Accept: "application/json" } });
+          if (!response.ok) throw new Error("Calendrier indisponible");
+          const data = await response.json();
+          reservationPeriods = Array.isArray(data.periods) ? data.periods : [];
+          calendarStatus.textContent = "Calendrier mis à jour.";
+        } catch {
+          calendarStatus.textContent = "Les disponibilités ne peuvent pas être chargées actuellement. Vous pouvez tout de même envoyer une demande.";
+        }
+        renderCalendar();
+      };
+
+      const minimumDate = toDateKey(today);
+      if (arrivalInput) arrivalInput.min = minimumDate;
+      if (departureInput) departureInput.min = minimumDate;
+      arrivalInput?.addEventListener("change", () => {
+        if (departureInput) {
+          departureInput.min = arrivalInput.value || minimumDate;
+          if (departureInput.value && departureInput.value <= arrivalInput.value) departureInput.value = "";
+        }
+        renderCalendar();
+      });
+      departureInput?.addEventListener("change", renderCalendar);
+
+      previousMonths?.addEventListener("click", () => {
+        const previous = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+        const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        visibleMonth = previous < currentMonth ? currentMonth : previous;
+        renderCalendar();
+      });
+      nextMonths?.addEventListener("click", () => {
+        visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+        renderCalendar();
+      });
+      mobileCalendarQuery.addEventListener("change", renderCalendar);
+
+      reservationForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!reservationResult) return;
+        reservationResult.className = "reservation-form-result";
+        reservationResult.textContent = "Envoi de votre demande…";
+        const submitButton = reservationForm.querySelector<HTMLButtonElement>("button[type='submit']");
+        if (submitButton) submitButton.disabled = true;
+
+        try {
+          const formData = new FormData(reservationForm);
+          const payload = Object.fromEntries(formData.entries());
+          const response = await fetch("/api/reservations-gite", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.message || "La demande n’a pas pu être envoyée.");
+
+          reservationResult.classList.add("is-success");
+          reservationResult.textContent = "Votre demande a bien été enregistrée. LFM Farm vous contactera après vérification des dates.";
+          reservationForm.reset();
+          if (arrivalInput) arrivalInput.min = minimumDate;
+          if (departureInput) departureInput.min = minimumDate;
+          await loadAvailability();
+        } catch (error) {
+          reservationResult.classList.add("is-error");
+          reservationResult.textContent = error instanceof Error ? error.message : "Une erreur est survenue. Vous pouvez contacter LFM Farm directement.";
+        } finally {
+          if (submitButton) submitButton.disabled = false;
+        }
+      });
+
+      if (bookingRoot) {
+        renderCalendar();
+        loadAvailability();
+      }
     </script>
   </body>
 </html>

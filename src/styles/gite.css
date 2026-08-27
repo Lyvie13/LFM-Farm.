@@ -124,6 +124,18 @@
   text-transform: uppercase;
 }
 
+/* Le titre de présentation reste équilibré sur tablette. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .gite-features-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .gite-feature--intro h2 {
+    font-size: 19px;
+    letter-spacing: -0.01em;
+  }
+}
+
 .gite-feature p,
 .gite-discovery p,
 .gite-restaurant p {
@@ -463,23 +475,340 @@
   min-height: 500px;
 }
 
-.gite-booking-placeholder {
-  display: grid;
-  width: min(100%, 520px);
-  min-height: 390px;
-  place-items: center;
-  align-content: center;
-  gap: 20px;
-  border-radius: 8px;
-  background-color: #d7d7d7;
-  color: #777;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
+.gite-booking-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.gite-booking-heading {
+  width: min(100%, 780px);
+  margin: 0 auto 38px;
   text-align: center;
 }
 
+.gite-booking-kicker {
+  margin: 0 0 8px;
+  color: var(--gite-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gite-booking-heading h2 {
+  margin: 0 0 14px;
+  color: var(--gite-accent);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+}
+
+.gite-booking-heading p,
+.reservation-form {
+  font-family: Arial, sans-serif;
+}
+
+.gite-booking-heading > p:last-child {
+  margin: 0;
+  color: var(--gite-text);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.reservation-calendar,
+.reservation-form {
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(83, 42, 20, 0.1);
+  background-color: white;
+}
+
+.reservation-calendar {
+  padding: 28px;
+}
+
+.reservation-calendar-toolbar {
+  display: grid;
+  grid-template-columns: 46px 1fr 46px;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.reservation-calendar-toolbar p {
+  display: none;
+  grid-column: 2;
+  margin: 0;
+  color: var(--gite-text);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.reservation-calendar-nav {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--gite-accent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gite-accent);
+  cursor: pointer;
+}
+
+.reservation-calendar-nav span {
+  width: 11px;
+  height: 11px;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+}
+
+.reservation-calendar-nav--previous span {
+  transform: translateX(2px) rotate(135deg);
+}
+
+.reservation-calendar-nav--previous {
+  grid-column: 1;
+}
+
+.reservation-calendar-nav--next span {
+  transform: translateX(-2px) rotate(-45deg);
+}
+
+.reservation-calendar-nav--next {
+  grid-column: 3;
+}
+
+.reservation-calendar-nav:hover,
+.reservation-calendar-nav:focus-visible {
+  background-color: var(--gite-accent);
+  color: white;
+}
+
+.reservation-months {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 38px;
+}
+
+.reservation-month h3 {
+  margin: 0 0 16px;
+  color: var(--gite-accent);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 23px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.reservation-weekdays,
+.reservation-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.reservation-weekdays {
+  margin-bottom: 7px;
+  color: #715f56;
+  font: 700 13px/1 Arial, sans-serif;
+  text-align: center;
+}
+
+.reservation-day {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid #ead9c9;
+  border-radius: 8px;
+  background-color: #fffaf5;
+  color: var(--gite-text);
+  font: 700 14px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.reservation-day:not(:disabled):hover,
+.reservation-day:not(:disabled):focus-visible {
+  border-color: var(--gite-accent);
+  box-shadow: 0 0 0 2px rgba(168, 63, 29, 0.18);
+}
+
+.reservation-day.is-empty {
+  border: 0;
+  background: transparent;
+}
+
+.reservation-day.is-requested {
+  border-color: #e2b253;
+  background-color: #fff0bd;
+}
+
+.reservation-day.is-unavailable {
+  border-color: #a8a09b;
+  background: repeating-linear-gradient(-45deg, #d8d3cf, #d8d3cf 5px, #c9c2bd 5px, #c9c2bd 10px);
+  color: #5e5854;
+}
+
+.reservation-day:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.reservation-day.is-selection-start,
+.reservation-day.is-selection-end {
+  border-color: var(--gite-accent);
+  background-color: var(--gite-accent);
+  color: white;
+}
+
+.reservation-day.is-selection-range {
+  border-color: #d99578;
+  background-color: #f4c9b5;
+}
+
+.reservation-calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 22px;
+  margin-top: 24px;
+  color: #5e514a;
+  font: 14px/1.3 Arial, sans-serif;
+}
+
+.reservation-calendar-legend span {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.reservation-calendar-legend i {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #ead9c9;
+  border-radius: 4px;
+  background-color: #fffaf5;
+}
+
+.reservation-calendar-legend .is-requested { background-color: #fff0bd; border-color: #e2b253; }
+.reservation-calendar-legend .is-unavailable { background-color: #cbc5c0; border-color: #a8a09b; }
+
+.reservation-calendar-status {
+  min-height: 20px;
+  margin: 16px 0 0;
+  color: #715f56;
+  font: 13px/1.4 Arial, sans-serif;
+  text-align: center;
+}
+
+.reservation-form {
+  width: min(100%, 900px);
+  margin: 38px auto 0;
+  padding: 34px;
+  color: var(--gite-text);
+}
+
+.reservation-form-heading {
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.reservation-form-heading h3 {
+  margin: 0 0 7px;
+  color: var(--gite-accent);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 29px;
+}
+
+.reservation-form-heading p,
+.reservation-form-notice {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.reservation-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.reservation-form-grid label {
+  display: grid;
+  gap: 7px;
+}
+
+.reservation-form-grid label > span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.reservation-form input,
+.reservation-form textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #d8c2b0;
+  border-radius: 7px;
+  background-color: #fffdfa;
+  color: var(--gite-text);
+  font: 16px/1.3 Arial, sans-serif;
+}
+
+.reservation-form input:focus,
+.reservation-form textarea:focus {
+  border-color: var(--gite-accent);
+  outline: 3px solid rgba(168, 63, 29, 0.13);
+}
+
+.reservation-form-message {
+  grid-column: 1 / -1;
+}
+
+.reservation-form textarea {
+  resize: vertical;
+}
+
+.reservation-form-consent {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin: 22px 0 14px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.reservation-form-consent input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex: 0 0 auto;
+  accent-color: var(--gite-accent);
+}
+
+.reservation-form-consent a {
+  color: var(--gite-accent);
+}
+
+.reservation-form-notice {
+  margin-bottom: 22px;
+  padding: 13px 15px;
+  border-left: 3px solid var(--gite-accent);
+  background-color: #fff6ed;
+  font-size: 14px;
+}
+
+.reservation-form .botcheck {
+  position: absolute;
+  left: -9999px;
+}
+
+.reservation-form .gite-booking-button {
+  display: block;
+  margin: 0 auto;
+}
+
 .gite-booking-button {
+  border: 0;
   padding: 13px 24px;
   border-radius: 8px;
   font-family: Arial, sans-serif;
@@ -488,6 +817,32 @@
   text-decoration: none;
   background-color: var(--gite-accent);
   color: white;
+  cursor: pointer;
+}
+
+.gite-booking-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.reservation-form-result {
+  min-height: 22px;
+  margin: 15px 0 0;
+  font: 700 14px/1.45 Arial, sans-serif;
+  text-align: center;
+}
+
+.reservation-form-result.is-success { color: #2e6b3c; }
+.reservation-form-result.is-error { color: #a12323; }
+
+@media (max-width: 800px) {
+  .reservation-months {
+    gap: 22px;
+  }
+
+  .reservation-calendar {
+    padding: 22px 18px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -588,7 +943,55 @@
     text-align: center;
   }
 
-  .gite-booking-placeholder {
-    margin: 0 auto;
+  .gite-booking {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .reservation-calendar-toolbar {
+    grid-template-columns: 40px 1fr 40px;
+    gap: 7px;
+  }
+
+  .reservation-calendar-toolbar p {
+    display: block;
+    font-size: 18px;
+  }
+
+  .reservation-calendar-nav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reservation-months {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-month:nth-child(2) {
+    display: none;
+  }
+
+  .reservation-month h3 {
+    display: none;
+  }
+
+  .reservation-day {
+    font-size: 13px;
+  }
+
+  .reservation-calendar-legend {
+    justify-content: flex-start;
+  }
+
+  .reservation-form {
+    padding: 26px 20px;
+  }
+
+  .reservation-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-form-message {
+    grid-column: auto;
   }
 }

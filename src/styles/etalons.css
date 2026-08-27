@@ -178,6 +178,8 @@
 }
 
 .etalon-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 8px;
   background-color: white;
@@ -192,6 +194,10 @@
 }
 
 .etalon-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 25px;
 }
 
@@ -222,6 +228,7 @@
 
 .etalon-card-button {
   display: inline-block;
+  margin-top: auto;
   padding: 13px 20px;
   border-radius: 8px;
   background-color: #a83f1d;

@@ -436,27 +436,87 @@
 }
 
 .gite-discovery-copy {
+  display: grid;
+  gap: 18px;
   align-self: center;
   color: var(--gite-text);
 }
 
-.gite-discovery-copy .gite-icon {
+.gite-discovery-item {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 20px;
+  border-left: 4px solid var(--gite-accent);
+  border-radius: 8px;
+  background-color: #fff8f0;
+}
+
+.gite-discovery-item .gite-icon {
   min-height: 0;
-  margin-bottom: 18px;
+  padding-top: 2px;
 }
 
-.gite-discovery-copy p {
-  margin: 0 0 18px;
+.gite-discovery-item .gite-icon img {
+  width: 42px;
+  height: 42px;
 }
 
-.gite-discovery-copy p:last-child {
-  margin-bottom: 0;
+.gite-discovery-item h3 {
+  margin: 0 0 8px;
+  color: var(--gite-accent);
+  font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
+  font-size: 23px;
+  line-height: 1.1;
+}
+
+.gite-discovery-item p {
+  margin: 0;
 }
 
 .gite-discovery-main {
   width: min(100%, 420px);
-  min-height: 0;
   justify-self: end;
+}
+
+.gite-discovery-photo {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  margin: 0;
+  border-radius: 9px;
+  background: #e3ddd5;
+  box-shadow: 0 5px 18px rgb(55 36 24 / 12%);
+}
+
+.gite-discovery-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.gite-discovery-photo:hover img {
+  transform: scale(1.025);
+}
+
+.gite-discovery-photo figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 28px 14px 11px;
+  color: white;
+  background: linear-gradient(transparent, rgb(20 18 15 / 78%));
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.gite-discovery-main.gite-discovery-photo {
+  aspect-ratio: 1 / 1;
 }
 
 .gite-gallery {
@@ -467,8 +527,23 @@
   margin: 0 auto;
 }
 
-.gite-gallery .gite-media-placeholder {
-  min-height: 190px;
+.gite-gallery .gite-discovery-photo {
+  aspect-ratio: 4 / 3;
+}
+
+.gite-photo-credits {
+  width: min(100%, 1200px);
+  margin: 12px auto 0;
+  color: #73665f;
+  font-size: 11px !important;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.gite-photo-credits a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .gite-booking {
@@ -875,6 +950,21 @@
     font-size: 25px;
   }
 
+  .gite-discovery-item {
+    grid-template-columns: 42px 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .gite-discovery-item .gite-icon img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .gite-discovery-item h3 {
+    font-size: 21px;
+  }
+
   .gite-feature p,
   .gite-discovery p,
   .gite-restaurant p {
@@ -936,6 +1026,10 @@
 
   .gite-discovery-main {
     justify-self: center;
+  }
+
+  .gite-photo-credits {
+    text-align: left;
   }
 
   .gite-restaurant {

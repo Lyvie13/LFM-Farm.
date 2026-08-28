@@ -328,11 +328,29 @@ object-position: right center;
 }
 
 .available-foals-content p {
+  max-width: 520px;
   margin: 0 0 40px;
 
   font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
   font-size: 27px;
   line-height: 1.3;
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .available-foals-content p {
+    max-width: 48%;
+  }
+
+  .available-foals-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(248, 234, 219, 1) 0%,
+      rgba(248, 234, 219, 0.96) 40%,
+      rgba(248, 234, 219, 0.62) 52%,
+      rgba(248, 234, 219, 0.08) 70%
+    );
+  }
+
 }
 
 /* =========================
@@ -542,6 +560,27 @@ object-position: right center;
   transform: translateY(-2px);
 }
 
+@media (min-width: 901px) and (max-width: 1100px) {
+  .gite-section,
+  .gite-photo {
+    height: 470px;
+  }
+
+  .gite-introduction-content {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  .gite-introduction h2 {
+    font-size: 34px;
+  }
+
+  .gite-introduction p {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+}
+
 @media (max-width: 900px) {
   .hero {
     height: 520px;
@@ -552,11 +591,11 @@ object-position: right center;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 62% center;
+    object-position: 42% center;
   }
 
   .hero-overlay {
-    background: linear-gradient(90deg, rgba(248, 234, 219, 0.98) 0%, rgba(248, 234, 219, 0.82) 50%, rgba(248, 234, 219, 0.15) 100%);
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.94) 0%, rgba(248, 234, 219, 0.68) 50%, rgba(248, 234, 219, 0.06) 100%);
   }
 
   .hero-content {
@@ -597,11 +636,15 @@ object-position: right center;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 65% center;
+    object-position: 34% center;
   }
 
   .available-foals-overlay {
-    background: linear-gradient(90deg, rgba(248, 234, 219, 1) 0%, rgba(248, 234, 219, 0.9) 52%, rgba(248, 234, 219, 0.18) 100%);
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.94) 0%, rgba(248, 234, 219, 0.68) 52%, rgba(248, 234, 219, 0.06) 100%);
+  }
+
+  .available-foals-content p {
+    max-width: 55%;
   }
 
   .gite-section {
@@ -633,7 +676,7 @@ object-position: right center;
   }
 
   .hero-overlay {
-    background: linear-gradient(90deg, rgba(248, 234, 219, 0.98) 0%, rgba(248, 234, 219, 0.88) 62%, rgba(248, 234, 219, 0.38) 100%);
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.92) 0%, rgba(248, 234, 219, 0.72) 55%, rgba(248, 234, 219, 0.12) 100%);
   }
 
   .hero-line {
@@ -686,8 +729,17 @@ object-position: right center;
   }
 
   .available-foals-content p {
-    max-width: 270px;
+    max-width: min(310px, 78vw);
     font-size: 19px;
+    line-height: 1.42;
+  }
+
+  .available-foals-content br {
+    display: none;
+  }
+
+  .available-foals-overlay {
+    background: linear-gradient(90deg, rgba(248, 234, 219, 0.92) 0%, rgba(248, 234, 219, 0.7) 58%, rgba(248, 234, 219, 0.1) 100%);
   }
 
   .gite-introduction p {

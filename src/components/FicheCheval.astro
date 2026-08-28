@@ -118,6 +118,20 @@ const dateNaissance = fields.dateNaissance
 
 const sexe = fields.sexe || "";
 
+const accorderStatut = (statut: string | undefined) => {
+  if (!statut) return "";
+
+  const estFemelle = sexe.trim().toLocaleLowerCase("fr").startsWith("f");
+  const estReserve = /^r[eé]serv[eé]$/i.test(statut.trim());
+
+  if (!estFemelle || !estReserve) return statut;
+  if (statut === statut.toLocaleUpperCase("fr")) return "RÉSERVÉE";
+  if (/^[A-ZÀ-ÖØ-Þ]/.test(statut)) return "Réservée";
+  return "réservée";
+};
+
+const statutAffiche = accorderStatut(fields.statut);
+
 const texteNaissance =
   sexe.toLowerCase().startsWith("f")
     ? "Née le"
@@ -311,9 +325,9 @@ const texteNaissance =
       <!-- STATUT DU POULAIN -->
 
       {
-        fields.statut && (
+        statutAffiche && (
           <p class="horse-status">
-            {fields.statut}
+            {statutAffiche}
           </p>
         )
       }

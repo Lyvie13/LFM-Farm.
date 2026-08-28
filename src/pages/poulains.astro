@@ -44,6 +44,18 @@ const getImageUrl = (url: string | undefined) => {
 
   return url;
 };
+
+const accorderStatut = (statut: string | undefined, sexe: string | undefined) => {
+  if (!statut) return "";
+
+  const estFemelle = (sexe || "").trim().toLocaleLowerCase("fr").startsWith("f");
+  const estReserve = /^r[eé]serv[eé]$/i.test(statut.trim());
+
+  if (!estFemelle || !estReserve) return statut;
+  if (statut === statut.toLocaleUpperCase("fr")) return "RÉSERVÉE";
+  if (/^[A-ZÀ-ÖØ-Þ]/.test(statut)) return "Réservée";
+  return "réservée";
+};
 ---
 
 <!doctype html>
@@ -129,6 +141,7 @@ const getImageUrl = (url: string | undefined) => {
               poulains.map((poulain: any, index: number) => {
                 const fields = poulain.fields;
                 const anneeNaissance = fields.dateNaissance?.slice(0, 4) || "";
+                const statutAffiche = accorderStatut(fields.statut, fields.sexe);
 
                 const photo = getImageUrl(
                   fields.photoPrincipale
@@ -158,8 +171,8 @@ const getImageUrl = (url: string | undefined) => {
                       <h2>{fields.nom}</h2>
 
                       {fields.sexe && (
-                        <p class="etalon-card-genotype">
-                          {fields.sexe}{fields.statut && ` · ${fields.statut}`}
+                        <p class="etalon-card-genotype foal-card-meta">
+                          {fields.sexe}{statutAffiche && ` · ${statutAffiche}`}
                         </p>
                       )}
 

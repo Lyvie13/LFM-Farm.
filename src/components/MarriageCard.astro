@@ -37,6 +37,8 @@ const nombreImages = [
 /* Noms */
 const nomEtalon = etalonFields?.nom || "";
 const nomPouliniere = pouliniereFields?.nom || "";
+const slugEtalon = etalonFields?.slug || "";
+const slugPouliniere = pouliniereFields?.slug || "";
 
 /* Titre de la carte */
 const titre =
@@ -100,7 +102,31 @@ const afficherBouton =
 
   <div class="marriage-card-content">
 
-    {titre && <h2>{titre}</h2>}
+    {
+      nomEtalon || nomPouliniere ? (
+        <h2 class="marriage-title">
+          {nomEtalon && (
+            slugEtalon ? (
+              <a href={`/etalons/${slugEtalon}`}>{nomEtalon}</a>
+            ) : (
+              <span>{nomEtalon}</span>
+            )
+          )}
+
+          {nomEtalon && nomPouliniere && <span aria-hidden="true"> &amp; </span>}
+
+          {nomPouliniere && (
+            slugPouliniere ? (
+              <a href={`/poulinieres/${slugPouliniere}`}>{nomPouliniere}</a>
+            ) : (
+              <span>{nomPouliniere}</span>
+            )
+          )}
+        </h2>
+      ) : (
+        titre && <h2>{titre}</h2>
+      )
+    }
 
     {
       informationsGenetiques && (
@@ -196,11 +222,27 @@ const afficherBouton =
     text-transform: uppercase;
   }
 
+  .marriage-title a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .marriage-title a:hover,
+  .marriage-title a:focus-visible {
+    color: #a83f1d;
+    text-decoration-color: currentColor;
+  }
+
   .marriage-genetics {
     margin: 0 0 18px;
     font-family: Arial, sans-serif;
     font-size: 13px;
-    text-transform: uppercase;
+    /* Ne jamais modifier la casse d'un génotype. */
+    text-transform: none;
   }
 
   .marriage-term {
@@ -247,7 +289,8 @@ const afficherBouton =
 
   @media (max-width: 600px) {
     .marriage-card-images {
-      height: 250px;
+      height: auto;
+      aspect-ratio: 2 / 1;
     }
 
     .marriage-card-content {

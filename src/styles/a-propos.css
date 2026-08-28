@@ -186,7 +186,7 @@
    TABLETTE ET MOBILE
 ========================= */
 
-@media (max-width: 760px) {
+@media (max-width: 850px) {
   .about-hero {
     height: 390px;
   }
@@ -221,7 +221,7 @@
   .about-grid--foals,
   .about-grid--gite {
     grid-template-columns: 1fr;
-    gap: 25px;
+    gap: 28px;
   }
 
   .about-grid--foals .about-image {
@@ -234,12 +234,21 @@
 
   .about-image,
   .about-image--portrait {
-    height: 310px;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   .about-grid--gite .about-image {
-    height: 310px;
+    height: auto;
     min-height: 0;
+    aspect-ratio: 16 / 9;
+    object-position: center;
+  }
+
+  .about-copy p,
+  .about-section p,
+  .about-copy li {
+    font-size: 18px;
   }
 
   .about-section,

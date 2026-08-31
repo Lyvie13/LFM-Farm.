@@ -10,16 +10,29 @@ const response = await contentfulClient.getEntries({
   include: 2,
 });
 
-const mariages = response.items.filter(
-  (mariage: any) =>
-    mariage.fields.afficherSurLeSite !== false
-);
+const mariages = response.items
+  .filter(
+    (mariage: any) =>
+      mariage.fields.afficherSurLeSite !== false
+  )
+  .sort((a: any, b: any) => {
+    const dateA = a.fields.dateTerme
+      ? new Date(a.fields.dateTerme).getTime()
+      : Number.MAX_SAFE_INTEGER;
+    const dateB = b.fields.dateTerme
+      ? new Date(b.fields.dateTerme).getTime()
+      : Number.MAX_SAFE_INTEGER;
+
+    return dateA - dateB;
+  });
 const titre = 'LFM Farm / Mariage';
 ---
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Découvrez les mariages Paint Horse prévus par LFM Farm, les origines des reproducteurs et les naissances attendues." />
     <title>{titre}</title>
@@ -47,6 +60,19 @@ const titre = 'LFM Farm / Mariage';
 </section>
 
 <section class="marriages-section">
+  {
+    mariages.length > 1 && (
+      <div class="marriages-toolbar">
+        <label for="marriages-sort">Trier les mariages</label>
+        <select id="marriages-sort" name="marriages-sort">
+          <option value="date-asc">Terme le plus proche</option>
+          <option value="date-desc">Terme le plus éloigné</option>
+          <option value="name-asc">Nom de A à Z</option>
+        </select>
+      </div>
+    )
+  }
+
   <div class="marriages-container">
     {
       mariages.length > 0 ? (
@@ -61,6 +87,40 @@ const titre = 'LFM Farm / Mariage';
     }
   </div>
 </section>
+
+<script>
+  const sortSelect = document.querySelector<HTMLSelectElement>("#marriages-sort");
+  const cardsContainer = document.querySelector<HTMLElement>(".marriages-container");
+
+  const sortMarriageCards = () => {
+    if (!sortSelect || !cardsContainer) return;
+
+    const cards = Array.from(
+      cardsContainer.querySelectorAll<HTMLElement>(".marriage-card")
+    );
+
+    cards.sort((cardA, cardB) => {
+      if (sortSelect.value === "name-asc") {
+        return (cardA.dataset.marriageName || "").localeCompare(
+          cardB.dataset.marriageName || "",
+          "fr",
+          { sensitivity: "base" }
+        );
+      }
+
+      const dateA = Number(cardA.dataset.termDate);
+      const dateB = Number(cardB.dataset.termDate);
+
+      return sortSelect.value === "date-desc"
+        ? dateB - dateA
+        : dateA - dateB;
+    });
+
+    cards.forEach((card) => cardsContainer.appendChild(card));
+  };
+
+  sortSelect?.addEventListener("change", sortMarriageCards);
+</script>
 
     </main>
     <footer>

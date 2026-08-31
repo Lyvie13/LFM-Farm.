@@ -181,6 +181,38 @@
   gap: 45px;
 }
 
+.marriages-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  width: min(100%, 1200px);
+  margin: 0 auto 28px;
+  font-family: Arial, sans-serif;
+}
+
+.marriages-toolbar label {
+  color: #28231f;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.marriages-toolbar select {
+  min-width: 230px;
+  padding: 12px 38px 12px 14px;
+  border: 1px solid #c9795b;
+  border-radius: 8px;
+  background-color: white;
+  color: #28231f;
+  font: inherit;
+  cursor: pointer;
+}
+
+.marriages-toolbar select:focus-visible {
+  outline: 3px solid rgba(168, 63, 29, 0.24);
+  outline-offset: 2px;
+}
+
 .marriages-empty {
   text-align: center;
   font-family: Baskerville, "Baskerville Old Face", Georgia, serif;
@@ -218,6 +250,17 @@
   .breeder-selection,
   .marriages-section {
     padding: 40px 5%;
+  }
+
+  .marriages-toolbar {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .marriages-toolbar select {
+    width: 100%;
+    min-width: 0;
   }
 
   .breeder-selection-card {

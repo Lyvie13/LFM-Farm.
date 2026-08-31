@@ -58,10 +58,16 @@ const informationsGenetiques = [
 /* Date du terme */
 const dateTerme = fields.dateTerme
   ? new Date(fields.dateTerme).toLocaleDateString("fr-FR", {
+      day: "numeric",
       month: "long",
       year: "numeric",
+      timeZone: "UTC",
     })
   : "";
+
+const dateTermeTri = fields.dateTerme
+  ? new Date(fields.dateTerme).getTime()
+  : Number.MAX_SAFE_INTEGER;
 
 /* Bouton */
 const afficherBouton =
@@ -69,7 +75,11 @@ const afficherBouton =
   fields.lienBouton;
 ---
 
-<article class="marriage-card">
+<article
+  class="marriage-card"
+  data-term-date={dateTermeTri}
+  data-marriage-name={titre.toLocaleLowerCase("fr-FR")}
+>
 
   <div
     class:list={[
@@ -81,21 +91,31 @@ const afficherBouton =
   >
     {
       etalonImageUrl && (
-        <img
-          src={etalonImageUrl}
-          alt={`Étalon ${nomEtalon}`}
-          loading="lazy"
-        />
+        <div
+          class="marriage-photo marriage-photo--stallion"
+          style={`--marriage-photo: url("${etalonImageUrl}")`}
+        >
+          <img
+            src={etalonImageUrl}
+            alt={`Étalon ${nomEtalon}`}
+            loading="lazy"
+          />
+        </div>
       )
     }
 
     {
       pouliniereImageUrl && (
-        <img
-          src={pouliniereImageUrl}
-          alt={`Poulinière ${nomPouliniere}`}
-          loading="lazy"
-        />
+        <div
+          class="marriage-photo marriage-photo--mare"
+          style={`--marriage-photo: url("${pouliniereImageUrl}")`}
+        >
+          <img
+            src={pouliniereImageUrl}
+            alt={`Poulinière ${nomPouliniere}`}
+            loading="lazy"
+          />
+        </div>
       )
     }
   </div>
@@ -197,11 +217,32 @@ const afficherBouton =
     grid-template-columns: 1fr;
   }
 
-  .marriage-card-images img {
+  .marriage-photo {
+    position: relative;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #d8c9bb;
+  }
+
+  .marriage-photo::before {
+    position: absolute;
+    inset: -18px;
+    background-image: var(--marriage-photo);
+    background-position: center;
+    background-size: cover;
+    content: "";
+    filter: blur(12px) brightness(0.78);
+    transform: scale(1.06);
+  }
+
+  .marriage-photo img {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
 .marriage-card-content {
@@ -271,6 +312,7 @@ const afficherBouton =
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
+    text-transform: uppercase;
   }
 
   .marriage-button:hover {
@@ -290,7 +332,7 @@ const afficherBouton =
   @media (max-width: 600px) {
     .marriage-card-images {
       height: auto;
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 1.55 / 1;
     }
 
     .marriage-card-content {

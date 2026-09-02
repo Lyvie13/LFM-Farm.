@@ -200,6 +200,56 @@ a {
   display: none;
 }
 
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9000;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  background-color: #a83f1d;
+  box-shadow: 0 5px 16px rgba(54, 24, 12, 0.28);
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px) scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  background-color: #7f2c11;
+}
+
+.back-to-top:focus-visible {
+  outline: 3px solid rgba(168, 63, 29, 0.28);
+  outline-offset: 3px;
+}
+
+.back-to-top svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
 
 /*==========================
 Autres boutons
@@ -242,6 +292,13 @@ Autres boutons
 }
 
 @media (max-width: 900px) {
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
   .site-header {
     min-height: 86px;
     grid-template-columns: 1fr auto;

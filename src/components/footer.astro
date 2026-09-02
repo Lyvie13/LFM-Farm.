@@ -16,6 +16,26 @@ import CookieConsent from "./CookieConsent.astro";
       <div class="footer-brand">
         <strong>LFM FARM</strong>
         <span>Élevage de Paint Horse</span>
+
+        <div class="footer-socials" aria-label="Réseaux sociaux de LFM Farm">
+          <a
+            href="https://www.instagram.com/lfm_farm/?utm_source=ig_web_button_share_sheet"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Suivre LFM Farm sur Instagram"
+          >
+            <img src="/icons/lets-icons--insta.svg" alt="" />
+          </a>
+
+          <a
+            href="https://www.facebook.com/media/set/?set=a.1476159574300721&type=3"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Suivre LFM Farm sur Facebook"
+          >
+            <img src="/icons/akar-icons--facebook-fill.svg" alt="" />
+          </a>
+        </div>
       </div>
 
       <address class="footer-contact">
@@ -59,7 +79,7 @@ import CookieConsent from "./CookieConsent.astro";
       <span>
         Site pensé et conçu par : 
         <a
-          href="https://lyviestudio.netlify.app"
+          href="https://lyviestudio.fr"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -127,6 +147,34 @@ import CookieConsent from "./CookieConsent.astro";
   .footer-brand span {
     font-family: Arial, sans-serif;
     font-size: 17px;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .footer-socials a {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 50%;
+    background-color: rgba(168, 63, 29, 0.78);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .footer-socials a:hover {
+    background-color: #a83f1d;
+    transform: translateY(-2px);
+  }
+
+  .footer-socials img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
   }
 
   .footer-contact {

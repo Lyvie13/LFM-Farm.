@@ -155,12 +155,21 @@ const texteNaissance =
       <div class="horse-main-image-wrapper">
         {
           photoPrincipale ? (
-            <img
-              id="horse-main-image"
-              class="horse-main-image"
-              src={photoPrincipale}
-              alt={`${typeCheval} ${fields.nom || ""}`}
-            />
+            <>
+              <img
+                id="horse-main-image-background"
+                class="horse-main-image-background"
+                src={photoPrincipale}
+                alt=""
+                aria-hidden="true"
+              />
+              <img
+                id="horse-main-image"
+                class="horse-main-image"
+                src={photoPrincipale}
+                alt={`${typeCheval} ${fields.nom || ""}`}
+              />
+            </>
           ) : (
             <div class="horse-no-image">
               Aucune photo disponible
@@ -383,6 +392,11 @@ const texteNaissance =
       "#horse-main-image"
     );
 
+  const arrierePlanImagePrincipale =
+    document.querySelector<HTMLImageElement>(
+      "#horse-main-image-background"
+    );
+
   const miniatures =
     document.querySelectorAll<HTMLButtonElement>(
       ".horse-thumbnail-button"
@@ -414,6 +428,9 @@ const texteNaissance =
 
     indexPhoto = (nouvelIndex + photos.length) % photos.length;
     imagePrincipale.src = photos[indexPhoto];
+    if (arrierePlanImagePrincipale) {
+      arrierePlanImagePrincipale.src = photos[indexPhoto];
+    }
 
     miniatures.forEach((miniature) => {
       miniature.classList.toggle(

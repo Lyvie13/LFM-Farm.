@@ -51,12 +51,24 @@
   <a class="contact-button" href="/contact">NOUS CONTACTER</a>
 </header>
 
+<button
+  class="back-to-top"
+  type="button"
+  aria-label="Revenir en haut de la page"
+  title="Revenir en haut"
+>
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="M6 15l6-6 6 6" />
+  </svg>
+</button>
+
 <script>
   const header = document.querySelector(".site-header");
   const menuButton = document.querySelector(".menu-toggle") as HTMLButtonElement;
   const dropdown = document.querySelector(".nav-dropdown");
   const dropdownButton = document.querySelector(".nav-dropdown-toggle") as HTMLButtonElement;
   const menuLinks = document.querySelectorAll(".main-navigation a");
+  const backToTopButton = document.querySelector<HTMLButtonElement>(".back-to-top");
 
   const closeMenu = () => {
     header?.classList.remove("menu-open");
@@ -81,5 +93,21 @@
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMenu();
+  });
+
+  const updateBackToTopButton = () => {
+    backToTopButton?.classList.toggle("is-visible", window.scrollY > 420);
+  };
+
+  window.addEventListener("scroll", updateBackToTopButton, { passive: true });
+  updateBackToTopButton();
+
+  backToTopButton?.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.scrollTo({
+      top: 0,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
   });
 </script>
